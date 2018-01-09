@@ -18,8 +18,8 @@ Please note that the following tutorial is for IntelliJ IDEA, assistance with ot
 
 ## Instructions for IntelliJ IDEA:
 
-1. Download the repository `Kineticraft-master` by clicking on `Clone or Download` green button, then click on `Download ZIP`.
-2. Open IntelliJ IDEA, `File` > `Open` > Select `Kineticraft-master` repo folder > `Open`.
+1. Download the repository `source-master` by clicking on `Clone or Download` green button, then click on `Download ZIP`.
+2. Open IntelliJ IDEA, `File` > `Open` > Select `source-master` repo folder > `Open`.
 3. Configure Project Structure (`File` > `Project Structure`):
     1. Under `Project Settings` > `Project`:
         1. Set `Project SDK` to `1.8`.
