@@ -24,22 +24,22 @@ Please note that the following tutorial is for IntelliJ IDEA, assistance with ot
     1. Under `Project Settings` > `Project`:
         1. Set `Project SDK` to `1.8`.
         2. Set `Project language level` to `8 - Lambdas, type annotations etc`.
-    2. Under `Project Settings` > `Modules` > `Kineticraft` > `Sources`:
+    2. Under `Project Settings` > `Modules` > `source-master` > `Sources`:
         1. Mark the `src` directory as a `Source`.
-    3. Under `Project Settings` > `Modules` > `Kineticraft` > `Paths`:
+    3. Under `Project Settings` > `Modules` > `source-master` > `Paths`:
         1. Press the `Use module compile output path` radio button.
-        2. Set `Output path` to a `/production/Kineticraft-master/build`.
-        3. Set `Test output path` to `/test/Kineticraft-master/test`.
+        2. Set `Output path` to a `/production/source-master/build`.
+        3. Set `Test output path` to `/test/source-master/test`.
     4. Under `Project Settings` > `Libraries`:
         1. Press the `+` button in the top of the left panel and select `Java`.
         2. From the dropdown file browser, choose the `/libs/` directory.
-        3. A window named `Choose Modules` will pop up, select the `Kineticraft` module and press `OK`.
+        3. A window named `Choose Modules` will pop up, select the `source-master` module and press `OK`.
         4. If there are any subdirectories in the `/libs/` directory (eg. Kotlin dependencies grouped into a directory), you need to manually add them using the `+` button in the bottom of the right panel.
     5. Under `Project Settings` > `Artifacts`:
         1. Press the `+` button, hover over `JAR` and select `Empty`.
         2. Name the new entry `Kineticraft`.
         3. Toggle the `Include in project build` checkmark.
-        4. In the `Available Elements` panel, double click `'Kineticraft' compile output` to move it over to the left panel.
+        4. In the `Available Elements` panel, double click `'source-master' compile output` to move it over to the left panel.
         5. Click `Kineticraft.jar` and at the bottom of the same window, press the `Use Exisiting Manifest` button, then select `MANIFEST.MF` within the `META-INF` folder.
 4. Final Touches
     1. Enable annotation processing:
