@@ -15,6 +15,7 @@ import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.discord.DiscordAPI;
 import net.kineticraft.lostcity.item.ItemType;
 import net.kineticraft.lostcity.item.ItemWrapper;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.party.Parties;
 import org.apache.commons.io.FileUtils;
@@ -162,7 +163,7 @@ public class Utils {
             return;
         }
 
-        if (MetadataManager.hasMetadata(player, "teleporting")) {
+        if (MetadataManager.hasMetadata(player, Metadata.TELEPORTING)) {
             player.sendMessage(ChatColor.RED + "Please wait until your current teleport finishes.");
             return;
         }
@@ -175,7 +176,7 @@ public class Utils {
         // Must be final to work in the bukkit scheduler.
         int[] tpTime = new int[] {p.getRank().isStaff() ? 0 : p.getTemporaryRank().getTpTime()};
 
-        MetadataManager.setMetadata(player, "teleporting", true);
+        MetadataManager.setMetadata(player, Metadata.TELEPORTING, true);
         player.playSound(player.getLocation(), Sound.AMBIENT_CAVE, 1F, 1F);
         player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 20 * (tpTime[0] + 2), 2));
         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20 * (tpTime[0] + 2), 2));
@@ -191,7 +192,7 @@ public class Utils {
                         player.playSound(player.getLocation(), Sound.ITEM_TOTEM_USE, 1F, 2F);
                     }
                     tpTask[0].cancel();
-                    MetadataManager.removeMetadata(player, "teleporting");
+                    MetadataManager.removeMetadata(player, Metadata.TELEPORTING);
                     return;
                 }
 
@@ -478,7 +479,7 @@ public class Utils {
      * @return name
      */
     public static String getSenderName(CommandSender sender) {
-        return hasWrapper(sender) ? KCPlayer.getWrapper(sender).getColoredUsername() : ChatColor.YELLOW + sender.getName();
+        return hasWrapper(sender) ? KCPlayer.getWrapper(sender).getColoredName() : ChatColor.YELLOW + sender.getName();
     }
 
     /**

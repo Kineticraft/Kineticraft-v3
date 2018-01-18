@@ -21,7 +21,6 @@ import java.util.stream.Stream;
 
 /**
  * Manages Cutscenes.
- * TODO: Show players in cutscene at startLocation.
  * Created by Kneesnap on 6/1/2017.
  */
 public class Cutscenes extends ModularMechanic<Cutscene> {

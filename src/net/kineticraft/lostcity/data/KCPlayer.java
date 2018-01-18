@@ -17,6 +17,7 @@ import net.kineticraft.lostcity.discord.DiscordChannel;
 import net.kineticraft.lostcity.mechanics.DataHandler;
 import net.kineticraft.lostcity.mechanics.Toggles.Toggle;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.Punishments.*;
 import net.kineticraft.lostcity.mechanics.Vanish;
 import net.kineticraft.lostcity.mechanics.Voting;
@@ -152,7 +153,6 @@ public class KCPlayer implements Jsonable {
             return;
         }
 
-
         Dog.PUPPER_PATROL.say(ChatColor.RED + getUsername() + ChatColor.WHITE + " has been punished by " + ChatColor.AQUA
                 + punisher.getName() + ChatColor.WHITE + " for " + ChatColor.YELLOW + type.getDisplay() + ChatColor.WHITE + ".");
 
@@ -160,12 +160,14 @@ public class KCPlayer implements Jsonable {
         String expiry = Utils.formatTimeFull(getPunishExpiry());
         Dog.OFFICER_BORKLEY.say("Arf Arf! Expires: " + ChatColor.YELLOW + expiry + ChatColor.WHITE + ".");
 
-        if (isOnline()) {
+        if (isOnline()){
             Player p = getPlayer();
             if (type == PunishmentType.XRAY)
                 Utils.toSpawn(p); // Teleport the player to spawn if banned for xray.
-            p.kickPlayer(ChatColor.RED + "Oh no! You've been punished for " + ChatColor.YELLOW + type.getDisplay() + ChatColor.RED + "...");
+            getPlayer().kickPlayer(ChatColor.RED + "Oh no! You've been punished for " + ChatColor.YELLOW
+                    + type.getDisplay() + ChatColor.RED + "...");
         }
+
         writeData();
         DiscordAPI.sendMessage(DiscordChannel.ORYX, punisher.getName() + " has punished " + getUsername()
                 + " for " + type.getDisplay() + " (" + expiry + ")");
@@ -236,7 +238,7 @@ public class KCPlayer implements Jsonable {
      * @return death
      */
     public Location getSelectedDeath() {
-        int index = getDeaths().size() - MetadataManager.getValue(getPlayer(), "compassDeath", 1) - 1;
+        int index = getDeaths().size() - MetadataManager.getMetadata(getPlayer(), Metadata.COMPASS_DEATH).asInt() - 1;
         PlayerDeath death = getDeaths().getValueSafe(index);
         return death != null ? death.getLocation() : null;
     }
@@ -396,7 +398,7 @@ public class KCPlayer implements Jsonable {
     public void vanish(boolean vanishState) {
         setVanished(vanishState);
         Vanish.hidePlayers(getPlayer());
-        MetadataManager.setMetadata(getPlayer(), "vanishTime", System.currentTimeMillis());
+        MetadataManager.setMetadata(getPlayer(), Metadata.VANISH_TIME, System.currentTimeMillis());
     }
 
     /**
@@ -422,14 +424,6 @@ public class KCPlayer implements Jsonable {
      */
     public String getDisplayName() {
         return getDisplayPrefix() + " " + getUsername();
-    }
-
-    /**
-     * Get this player's name with their rank color applied.
-     * @return displayName
-     */
-    public String getColoredUsername() {
-        return getTemporaryRank().getChatPrefix() + getUsername();
     }
 
     /**
@@ -506,7 +500,6 @@ public class KCPlayer implements Jsonable {
     public static KCPlayer getWrapper(UUID uuid) {
         return playerMap.get(uuid);
     }
-
     /**
      * Does this UUID match a saved wrapper on disk?
      * @param uuid

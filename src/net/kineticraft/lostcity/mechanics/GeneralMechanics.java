@@ -2,8 +2,6 @@ package net.kineticraft.lostcity.mechanics;
 
 import com.xxmicloxx.NoteBlockAPI.NoteBlockPlayerMain;
 import com.xxmicloxx.NoteBlockAPI.SongEndEvent;
-import me.ryanhamshire.GriefPrevention.Claim;
-import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.config.Configs;
@@ -34,9 +32,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
-import java.util.ArrayList;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -49,6 +44,7 @@ public class GeneralMechanics extends Mechanic {
 
     @Override
     public void onEnable() {
+
         // Increment time played.
         Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance(), () ->
             Bukkit.getOnlinePlayers().stream().map(KCPlayer::getWrapper)
@@ -84,11 +80,6 @@ public class GeneralMechanics extends Mechanic {
                                 .collect(Collectors.joining("\n"))).toLegacy());
             }
         }, 50L);
-
-        // Attempt to expire claims.
-        Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance(), // Avoid concurrent modification by making a new arraylist.
-                () -> Core.logInfo(new ArrayList<>(GriefPrevention.instance.dataStore.getClaims()).stream().filter(GeneralMechanics::attemptExpire).count() + " claims expired."), 0, 72000);
-
 
         // Don't allow players on top of the nether.
         Bukkit.getScheduler().runTaskTimer(Core.getInstance(), () ->
@@ -235,20 +226,5 @@ public class GeneralMechanics extends Mechanic {
         PlayerChangeRegionEvent change = new PlayerChangeRegionEvent(evt);
         if (!change.getRegionFrom().equals(change.getRegionTo()))
            Bukkit.getPluginManager().callEvent(change);
-    }
-
-    private static boolean attemptExpire(Claim claim) {
-        if (claim.isAdminClaim())
-            return false; // These claims are exempt.
-        ArrayList<String> preventList = new ArrayList<>();
-        preventList.add(claim.ownerID.toString());
-        claim.getPermissions(preventList, preventList, new ArrayList<>(), preventList); // Should all be pointed to the same list, except accessors which we ignore.
-        long lastLogin = preventList.stream().map(UUID::fromString).map(Bukkit::getOfflinePlayer).mapToLong(OfflinePlayer::getLastPlayed).max().orElse(0); // Get the last login time.
-        long days = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - lastLogin);
-        if (days < 60)
-            return false;
-        Core.logInfo(claim.ownerID + " expired. Days = " + days);
-        GriefPrevention.instance.dataStore.deleteClaim(claim);
-        return true;
     }
 }

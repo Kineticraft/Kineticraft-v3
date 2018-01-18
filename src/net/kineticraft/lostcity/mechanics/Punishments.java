@@ -60,7 +60,7 @@ public class Punishments extends Mechanic {
                 ChatColor.RED + "You are banned from Kineticraft!\n"
                         + ChatColor.RED + "Reason: " + ChatColor.YELLOW + player.getPunishments().last().getType().getDisplay() + "\n"
                         + ChatColor.RED + "Expiration: " + ChatColor.YELLOW + Utils.formatTimeFull(player.getPunishExpiry()) + "\n"
-                        + ChatColor.RED + "Appeal on discord: http://kineticraft.net");
+                        + ChatColor.RED + "Appeal on discord: https://discord.gg/QS24tsW ");
     }
 
     @AllArgsConstructor @Data
@@ -123,7 +123,7 @@ public class Punishments extends Mechanic {
         SPAM("Spamming", 2, Material.PORK),
         HARASSMENT("Harassment", 2, Material.LAVA_BUCKET),
         ADVERTISING("Advertising", 2, Material.BOOK_AND_QUILL),
-        AFK_BYPASS("AFK Bypass", 2, Material.IRON_DOOR),
+        AFK_BYPASS("Afk Bypass", 2, Material.IRON_DOOR),
         TOXICITY("Toxicity", 3, Material.POISONOUS_POTATO),
         SLURS("Slurs", 7, Material.GOLD_HOE),
         THREATS("Threats", 7, Material.IRON_SWORD),

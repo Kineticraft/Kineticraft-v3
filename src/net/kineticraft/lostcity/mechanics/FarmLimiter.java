@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.mechanics;
 
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import org.bukkit.attribute.Attribute;
@@ -65,7 +66,7 @@ public class FarmLimiter extends Mechanic {
      * @return playerDamage
      */
     private static double getPlayerDamage(Entity entity) {
-        return MetadataManager.getValue(entity, "playerDamage", 0D);
+        return MetadataManager.getMetadata(entity, Metadata.PLAYER_DAMAGE).asDouble();
     }
 
     /**
@@ -74,7 +75,7 @@ public class FarmLimiter extends Mechanic {
      * @param damage
      */
     private static void addPlayerDamage(Entity entity, double damage) {
-        MetadataManager.setMetadata(entity, "playerDamage", getPlayerDamage(entity) + damage);
+        MetadataManager.setMetadata(entity, Metadata.PLAYER_DAMAGE, getPlayerDamage(entity) + damage);
     }
 
     /**

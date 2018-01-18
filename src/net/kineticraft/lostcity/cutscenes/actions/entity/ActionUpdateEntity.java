@@ -2,7 +2,6 @@ package net.kineticraft.lostcity.cutscenes.actions.entity;
 
 import net.kineticraft.lostcity.cutscenes.annotations.ActionData;
 import net.kineticraft.lostcity.cutscenes.annotations.AllowNull;
-import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -15,8 +14,6 @@ import org.bukkit.entity.Entity;
 public class ActionUpdateEntity extends ActionEntity {
     @AllowNull private String customName;
     private boolean showName;
-    private boolean dontRemove;
-    private boolean keepInvincible;
 
     @Override
     public void execute() {
@@ -24,8 +21,6 @@ public class ActionUpdateEntity extends ActionEntity {
         if (customName != null)
             e.setCustomName(ChatColor.DARK_GREEN + customName);
         e.setCustomNameVisible(showName);
-        MetadataManager.setMetadata(e, "csKeep", dontRemove);
-        MetadataManager.setMetadata(e, "csInvincible", keepInvincible);
     }
 
     @Override

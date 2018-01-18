@@ -2,6 +2,7 @@ package net.kineticraft.lostcity.party.anniversary;
 
 import com.destroystokyo.paper.Title;
 import net.kineticraft.lostcity.item.ItemManager;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.party.Parties;
 import net.kineticraft.lostcity.party.games.MultiplayerGame;
@@ -67,14 +68,14 @@ public class Pictionary extends MultiplayerGame {
                 return;
             }
 
-            if (MetadataManager.hasMetadata(p, "dmtCorrect")) {
+            if (MetadataManager.hasMetadata(p, Metadata.DMT_CORRECT)) {
                 p.sendMessage(ChatColor.RED + "You have already guessed the word this round.");
                 return;
             } else if (currentWord.equalsIgnoreCase(evt.getMessage())) {
                 broadcastPlayers(ChatColor.GREEN.toString() + ChatColor.BOLD + evt.getPlayer().getName() + " guessed the word! +1 Point!");
                 setScore(p, getScore(p) + 1); // Increase score of guesser
                 setScore(currentPainter, getScore(currentPainter) + 1); // Increase score of drawer.
-                MetadataManager.setMetadata(p, "dmtCorrect", true);
+                MetadataManager.setMetadata(p, Metadata.DMT_CORRECT, true);
                 return;
             }
         }
@@ -126,7 +127,7 @@ public class Pictionary extends MultiplayerGame {
         drawQueue = new ArrayList<>(getPlayers());
 
         for (Player p : getPlayers()) { // Reset player data.
-            MetadataManager.removeMetadata(p, "dmtCorrect");
+            MetadataManager.removeMetadata(p, Metadata.DMT_CORRECT);
             setScore(p, 0);
         }
 
@@ -186,7 +187,7 @@ public class Pictionary extends MultiplayerGame {
         currentWord = "waitFor";
 
         for (Player p : getPlayers()) // Reset guess state.
-            MetadataManager.removeMetadata(p, "dmtCorrect");
+            MetadataManager.removeMetadata(p, Metadata.DMT_CORRECT);
 
         if (drawQueue.isEmpty()) { // Game has finished.
             currentPainter = null;
@@ -268,10 +269,10 @@ public class Pictionary extends MultiplayerGame {
     }
 
     private int getScore(Player p) {
-        return MetadataManager.getValue(p, "dmtScore");
+        return MetadataManager.getMetadata(p, Metadata.DMT_SCORE).asInt();
     }
 
     private void setScore(Player p, int score) {
-        MetadataManager.setMetadata(p, "dmtScore", score);
+        MetadataManager.setMetadata(p, Metadata.DMT_SCORE, score);
     }
 }
