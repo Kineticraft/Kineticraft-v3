@@ -68,11 +68,14 @@ public class Callbacks extends Mechanic {
                 .append("      ").append("[" + no + "]").color(ChatColor.RED).bold().runCommand("/trigger decline set 1")
                 .showText(ChatColor.RED + "Click here to " + no.toLowerCase() + ".");
 
+
         player.sendMessage(textBuilder.create());
         listen(player, ListenerType.TRIGGER, x -> {
             if (accept != null)
                 accept.run();
         }, deny);
+
+
     }
 
     /**

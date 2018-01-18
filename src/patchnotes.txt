@@ -1,5 +1,6 @@
 &8Changes:
- - 
-
-&8Others:
- - Transfer source code to official KC Github
+ - Added Warpforms (Whaattt???)
+ - Reverted back to old claim system until fix
+ - Added new icon link for donors
+ - Changed Auto_Relog to AFK_Bypass
+ - Xrayers teleport to spawn on punish

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.kineticraft.lostcity.data.Jsonable;
 import net.kineticraft.lostcity.data.maps.JsonMap;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.mechanics.system.MechanicManager;
 import net.kineticraft.lostcity.mechanics.system.ModularMechanic;
@@ -32,12 +33,12 @@ public class ArmorStands extends ModularMechanic<ArmorStands.ArmorPose> {
 
     @EventHandler(ignoreCancelled = true)
     public void onArmorStand(PlayerArmorStandManipulateEvent evt) {
-        evt.setCancelled(MetadataManager.hasMetadata(evt.getRightClicked(), "noModify"));
+        evt.setCancelled(MetadataManager.hasMetadata(evt.getRightClicked(), Metadata.NO_MODIFY));
     }
 
     @EventHandler(ignoreCancelled = true) // Prevent these armorstands from dropping dear
     public void onEntityDeath(EntityDeathEvent evt) {
-        if (evt.getEntity() instanceof ArmorStand && MetadataManager.hasMetadata(evt.getEntity(), "noModify"))
+        if (evt.getEntity() instanceof ArmorStand && MetadataManager.hasMetadata(evt.getEntity(), Metadata.NO_MODIFY))
             evt.getDrops().clear();
     }
 
@@ -72,7 +73,7 @@ public class ArmorStands extends ModularMechanic<ArmorStands.ArmorPose> {
             stand.setInvulnerable(true);
             stand.setBasePlate(false);
             stand.setArms(true);
-            MetadataManager.setMetadata(stand, "noModify", true);
+            MetadataManager.setMetadata(stand, Metadata.NO_MODIFY, true);
         }
 
         assert pose != null;

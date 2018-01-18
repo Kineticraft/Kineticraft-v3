@@ -1,6 +1,7 @@
 package net.kineticraft.lostcity.cutscenes.actions.entity;
 
 import net.kineticraft.lostcity.cutscenes.annotations.ActionData;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Material;
@@ -19,7 +20,7 @@ public class ActionLoadEntity extends ActionEntity {
     public void execute() {
         Entity ent = Utils.getNearbyEntities(getCamera().getLocation(), 100).stream()
                 .filter(e -> Utils.containsIgnoreCase(e.getName(), displayName)).findAny().orElse(null);
-        MetadataManager.setMetadata(ent, "csKeep", true); // By default keep this entity after the cutscene ends.
+        MetadataManager.setMetadata(ent, Metadata.CUTSCENE_KEEP, true);
         getEvent().getStatus().setEntity(getEntityName(), ent);
     }
 

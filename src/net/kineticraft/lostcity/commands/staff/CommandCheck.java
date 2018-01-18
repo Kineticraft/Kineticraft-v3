@@ -2,6 +2,7 @@ package net.kineticraft.lostcity.commands.staff;
 
 import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.commands.StaffCommand;
+import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
@@ -23,15 +24,15 @@ public class CommandCheck extends StaffCommand {
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        boolean hasReturn = MetadataManager.hasMetadata(p, "checkGm");
+        boolean hasReturn = MetadataManager.hasMetadata(p, Metadata.CHECK_GM);
 
         if (args.length > 0) {
             if (!Utils.isVisible(sender, args[0]))
                 return;
 
             if (!hasReturn) {
-                MetadataManager.setMetadata(p, "checkGm", p.getGameMode());
-                MetadataManager.setMetadata(p, "checkLocation", p.getLocation());
+                MetadataManager.setMetadata(p, Metadata.CHECK_GM, p.getGameMode());
+                MetadataManager.setMetadata(p, Metadata.CHECK_LOCATION, p.getLocation());
             }
             Player target = Bukkit.getPlayer(args[0]);
             p.setGameMode(GameMode.SPECTATOR);
@@ -45,7 +46,7 @@ public class CommandCheck extends StaffCommand {
             return;
         }
 
-        p.teleport((Location) MetadataManager.removeMetadata(p, "checkLocation"));
-        p.setGameMode(MetadataManager.getEnum(p, "checkGm", GameMode.class));
+        p.teleport((Location) MetadataManager.removeMetadata(p, Metadata.CHECK_LOCATION));
+        p.setGameMode(GameMode.valueOf(MetadataManager.removeMetadata(p, Metadata.CHECK_GM)));
     }
 }
