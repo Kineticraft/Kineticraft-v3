@@ -60,7 +60,7 @@ public class Punishments extends Mechanic {
                 ChatColor.RED + "You are banned from Kineticraft!\n"
                         + ChatColor.RED + "Reason: " + ChatColor.YELLOW + player.getPunishments().last().getType().getDisplay() + "\n"
                         + ChatColor.RED + "Expiration: " + ChatColor.YELLOW + Utils.formatTimeFull(player.getPunishExpiry()) + "\n"
-                        + ChatColor.RED + "Appeal on discord: http://kineticraft.net");
+                        + ChatColor.RED + "Appeal on discord: https://discord.gg/QS24tsW ");
     }
 
     @AllArgsConstructor @Data
