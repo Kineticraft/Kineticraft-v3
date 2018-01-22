@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  *
  * Created by Kneesnap on 6/12/2017.
  */
-public class TextBuilder extends ComponentBuilder {
+public class TextBuilder extends ComponentBuilderWrapper {
 
     public TextBuilder() {
         this("");
@@ -39,7 +39,7 @@ public class TextBuilder extends ComponentBuilder {
 
     @Override // Don't retain any previous formatting.
     public TextBuilder append(String text) {
-        append(text, FormatRetention.NONE);
+        append(text, ComponentBuilder.FormatRetention.NONE);
         return this;
     }
 
@@ -309,3 +309,4 @@ public class TextBuilder extends ComponentBuilder {
         return getParts().toArray(new BaseComponent[0]);
     }
 }
+
