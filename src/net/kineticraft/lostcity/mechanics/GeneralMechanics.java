@@ -50,13 +50,15 @@ public class GeneralMechanics extends Mechanic {
     @Override
     public void onEnable() {
         // New claim expiration system. This only runs on startup.
-        ArrayList<Claim> claims = new ArrayList<>(GriefPrevention.instance.dataStore.getClaims());
-        int expireCount = 0;
-        for(Claim claim : claims) {
-            if(attemptExpire(claim))
-                ++ expireCount;
-        }
-        Core.logInfo(expireCount + " claims have expired.");
+        Bukkit.getScheduler().runTaskLater(Core.getInstance(), () -> {
+            ArrayList<Claim> claims = new ArrayList<>(GriefPrevention.instance.dataStore.getClaims());
+            int expireCount = 0;
+            for(Claim claim : claims) {
+                if(attemptExpire(claim))
+                    ++ expireCount;
+            }
+            Core.logInfo(expireCount + " claims have expired.");
+        }, 1000L);
 
         // Increment time played.
         Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance(), () ->
