@@ -45,6 +45,8 @@ public enum EnumRank {
     private final int hoursNeeded;
     private final int accomplishmentsNeeded;
 
+    public static final EnumRank[] VALUES = values();
+
     EnumRank(String rankSymbol, ChatColor color, ChatColor nameColor) {
         this(rankSymbol, color, nameColor, 2, 50, -1, -1);
     }
