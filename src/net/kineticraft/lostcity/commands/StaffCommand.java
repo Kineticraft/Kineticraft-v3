@@ -9,7 +9,7 @@ import net.kineticraft.lostcity.EnumRank;
 public abstract class StaffCommand extends PlayerCommand {
 
     public StaffCommand(String usage, String help, String... alias) {
-        this(EnumRank.TRIAL, usage, help, alias);
+        this(EnumRank.BUILDER, usage, help, alias);
     }
 
     public StaffCommand(EnumRank minRank, String usage, String help, String... alias) {

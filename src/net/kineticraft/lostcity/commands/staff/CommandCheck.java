@@ -1,6 +1,7 @@
 package net.kineticraft.lostcity.commands.staff;
 
 import net.kineticraft.lostcity.Core;
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.mechanics.metadata.Metadata;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
@@ -18,7 +19,7 @@ import org.bukkit.entity.Player;
  */
 public class CommandCheck extends StaffCommand {
     public CommandCheck() {
-        super("[player]", "Spectate a player", "check", "spectate");
+        super(EnumRank.JR_BUILDER, "[player]", "Spectate a player", "check", "spectate");
     }
 
     @Override

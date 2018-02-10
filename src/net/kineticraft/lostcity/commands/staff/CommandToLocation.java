@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class CommandToLocation extends StaffCommand {
 
     public CommandToLocation() {
-        super("<x> <y> <z> [yaw] [pitch] [world]", "Teleport to a location.", "tolocation", "toloc", "tl");
+        super(EnumRank.JR_MOD, "<x> <y> <z> [yaw] [pitch] [world]", "Teleport to a location.", "tolocation", "toloc", "tl");
     }
 
     @Override

@@ -28,13 +28,13 @@ public enum EnumRank {
     VOTER("VOTER", ChatColor.LIGHT_PURPLE, ChatColor.LIGHT_PURPLE), // We don't actually set players to this rank.
     MEDIA("∈", ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE),
 
-    APPRENTICE("JR BLD", ChatColor.GRAY, ChatColor.GRAY),
-    ROOKIE("JR DEV", ChatColor.AQUA, ChatColor.AQUA),
-    TRIAL("JR MOD", ChatColor.GREEN, ChatColor.GREEN),
-    BUILDER("BLD", ChatColor.GOLD, ChatColor.YELLOW),
-    DEV("DEV", ChatColor.DARK_AQUA, ChatColor.AQUA),
+    JR_BUILDER("JR BUILDER", ChatColor.YELLOW, ChatColor.YELLOW),
+    JR_DEV("JR DEV", ChatColor.AQUA, ChatColor.AQUA),
+    JR_MOD("JR MOD", ChatColor.GREEN, ChatColor.GREEN),
+    BUILDER("BUILDER", ChatColor.GOLD, ChatColor.YELLOW),
+    DEV("DEV", ChatColor.BLUE, ChatColor.BLUE),
     MOD("MOD", ChatColor.DARK_GREEN, ChatColor.GREEN),
-    HR("HR", ChatColor.DARK_BLUE, ChatColor.DARK_BLUE),
+    HR("HR", ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE),
     ADMIN("ADMIN", ChatColor.DARK_RED,  ChatColor.RED);
 
     private final String rankSymbol;
@@ -91,7 +91,7 @@ public enum EnumRank {
      * @return staff
      */
     public boolean isStaff() {
-        return isAtLeast(APPRENTICE);
+        return isAtLeast(JR_BUILDER);
     }
 
     /**
