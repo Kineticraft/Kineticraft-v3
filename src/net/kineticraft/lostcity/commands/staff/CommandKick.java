@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.discord.DiscordAPI;
 import net.kineticraft.lostcity.discord.DiscordChannel;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class CommandKick extends StaffCommand {
 
     public CommandKick() {
-        super("<player> [reason]", "Kick a player", "kick");
+        super(EnumRank.JR_BUILDER, "<player> [reason]", "Kick a player", "kick");
         autocompleteOnline();
     }
 

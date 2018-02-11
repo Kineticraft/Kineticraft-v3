@@ -19,7 +19,7 @@ public class CommandReboot extends PlayerCommand {
 
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
-        if (Utils.getRank(sender).isAtLeast(EnumRank.MOD) && args.length > 0) {
+        if (Utils.getRank(sender).isAtLeast(EnumRank.HR) && args.length > 0) {
             ServerUtils.reboot(Integer.parseInt(args[0]));
             return;
         }

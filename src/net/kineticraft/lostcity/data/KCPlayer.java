@@ -52,7 +52,6 @@ public class KCPlayer implements Jsonable {
 
     private Particle effect;
     private boolean vanished;
-    private long zenMode;
     private String nickname;
     private long secondsPlayed;
     private int lastBuild;
@@ -330,7 +329,7 @@ public class KCPlayer implements Jsonable {
         player.setDisplayName(getName());
         getTemporaryRank().getTeam().addEntry(player.getName());
         Voting.giveRewards(player); // Give vote rewards, if any.
-        player.setOp(getRank().isAtLeast(EnumRank.BUILDER)); // Grant or remove OP status if the player is of high enough level.
+        player.setOp(getRank().isAtLeast(EnumRank.MOD)); // Grant or remove OP status if the player is of high enough level.
 
         // Updates data.
         setLastIP(player.getAddress().toString().split("/")[1].split(":")[0]);

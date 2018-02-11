@@ -1,10 +1,15 @@
 package net.kineticraft.lostcity.commands.player;
 
+import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.commands.misc.CommandInfo;
 import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.data.KCPlayer;
+import net.kineticraft.lostcity.utils.TextUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+
+import java.io.File;
+import java.util.Scanner;
 
 /**
  * Ranks - A list of all ranks.
@@ -19,7 +24,6 @@ public class CommandRanks extends CommandInfo {
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
         super.onCommand(sender, args);
-
         sender.sendMessage("");
         sender.sendMessage(ChatColor.GRAY + "Your rank: " + KCPlayer.getWrapper(sender).getRank().getFullName());
         sender.sendMessage(ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/rankup" + ChatColor.GRAY + " to rankup.");

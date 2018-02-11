@@ -21,7 +21,7 @@ public class CommandSpawn extends PlayerCommand {
 
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
-        if (Utils.getRank(sender).isAtLeast(EnumRank.TRIAL) && args.length > 0) {
+        if (Utils.getRank(sender).isAtLeast(EnumRank.JR_MOD) && args.length > 0) {
             if (Utils.isVisible(sender, args[0])) {
                 Bukkit.getPlayer(args[0]).teleport(Core.getMainWorld().getSpawnLocation());
                 sender.sendMessage(ChatColor.GOLD + "Teleported.");

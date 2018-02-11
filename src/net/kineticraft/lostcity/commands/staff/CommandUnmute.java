@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.data.QueryTools;
 import org.bukkit.ChatColor;
@@ -12,7 +13,7 @@ import org.bukkit.command.CommandSender;
 public class CommandUnmute extends StaffCommand {
 
     public CommandUnmute() {
-        super("<player>", "Unmute a player.", "unmute");
+        super(EnumRank.JR_BUILDER, "<player>", "Unmute a player.", "unmute");
         autocompleteOnline();
     }
 
