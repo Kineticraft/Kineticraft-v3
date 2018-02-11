@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class CommandNear extends StaffCommand {
     private static final int MAX_RADIUS = 500;
 
     public CommandNear() {
-        super("[radius] [all]", "Get all nearby players/entities.", "near");
+        super(EnumRank.JR_BUILDER, "[radius] [all]", "Get all nearby players/entities.", "near");
     }
     
     @Override

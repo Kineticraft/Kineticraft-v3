@@ -11,7 +11,7 @@ import org.bukkit.command.CommandSender;
  */
 public class CommandBackup extends StaffCommand {
     public CommandBackup() {
-        super(EnumRank.ADMIN, "", "Take a backup of the server.", "backup");
+        super(EnumRank.HR, "", "Take a backup of the server.", "backup");
     }
 
     @Override

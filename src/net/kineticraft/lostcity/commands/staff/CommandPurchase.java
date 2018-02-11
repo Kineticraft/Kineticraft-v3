@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
  */
 public class CommandPurchase extends StaffCommand {
     public CommandPurchase() {
-        super(EnumRank.MOD, "<player> <price>", "Indicate a player has donated.", "purchase");
+        super(EnumRank.HR, "<player> <price>", "Indicate a player has donated.", "purchase");
     }
 
     @Override

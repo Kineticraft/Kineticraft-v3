@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.data.QueryTools;
 import net.kineticraft.lostcity.item.items.books.ItemBookNotes;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
  */
 public class CommandNotes extends StaffCommand {
     public CommandNotes() {
-        super("<player>", "View stored notes about a player", "notes");
+        super(EnumRank.JR_BUILDER, "<player>", "View stored notes about a player", "notes");
         autocompleteOnline();
     }
 

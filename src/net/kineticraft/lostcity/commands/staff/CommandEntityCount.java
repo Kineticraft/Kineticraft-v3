@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.utils.Pair;
 import net.kineticraft.lostcity.utils.Utils;
@@ -28,7 +29,7 @@ public class CommandEntityCount extends StaffCommand {
     private static final int MAX_RADIUS = 500;
 
     public CommandEntityCount() {
-        super("[radius] [global] [type]", "List nearby entities.", "entitycount", "ec");
+        super(EnumRank.JR_BUILDER, "[radius] [global] [type]", "List nearby entities.", "entitycount", "ec");
     }
 
     @Override

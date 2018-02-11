@@ -77,7 +77,7 @@ public class Core extends JavaPlugin {
     }
 
     /**
-     * Broadcast a serwer-wide alert.
+     * Broadcast a server-wide alert.
      * @param alert
      */
     public static void announce(String alert) {
@@ -90,7 +90,7 @@ public class Core extends JavaPlugin {
      * @param message
      */
     public static void alertStaff(String message) {
-        alert(EnumRank.TRIAL, null, ChatColor.RED + message);
+        alert(EnumRank.JR_MOD, null, ChatColor.RED + message);
     }
 
     /**

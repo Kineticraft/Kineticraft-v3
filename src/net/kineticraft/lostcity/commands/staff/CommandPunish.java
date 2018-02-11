@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.data.QueryTools;
 import net.kineticraft.lostcity.guis.staff.GUIPunish;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class CommandPunish extends StaffCommand {
 
     public CommandPunish() {
-        super("<player> [offense]", "Punish a player.", "punish");
+        super(EnumRank.JR_BUILDER, "<player> [offense]", "Punish a player.", "punish");
         autocompleteOnline();
         autocomplete(PunishmentType.values());
     }

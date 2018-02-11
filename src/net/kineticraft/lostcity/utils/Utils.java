@@ -529,7 +529,7 @@ public class Utils {
      */
     public static EnumRank getRank(CommandSender sender) {
         return hasWrapper(sender) ? KCPlayer.getWrapper(sender).getRank()
-                : (sender instanceof ConsoleCommandSender || sender instanceof BlockCommandSender ? EnumRank.DEV : EnumRank.MU);
+                : (sender instanceof ConsoleCommandSender || sender instanceof BlockCommandSender ? EnumRank.VALUES[EnumRank.VALUES.length - 1] : EnumRank.MU);
     }
 
     /**
