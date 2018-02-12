@@ -13,6 +13,6 @@
 
  - Fixed Claim/Trust Abandoning Issue
  - Code changes to allow for Spigot update
- - Updated plugins and PaperSpigot, added AWE plugin
+ - Updated plugins and PaperSpigot
  - Made changes for implementing New Roles
  - Changes to Discord: delete #music-central added new staff roles / tags (with color coordinating to in-game colors)
