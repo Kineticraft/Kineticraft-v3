@@ -7,6 +7,7 @@ import net.kineticraft.lostcity.item.ItemWrapper;
 import net.kineticraft.lostcity.item.event.ItemListener;
 import net.kineticraft.lostcity.item.event.ItemUsage;
 import net.kineticraft.lostcity.item.event.events.ItemInteractEvent;
+import net.kineticraft.lostcity.utils.ComponentBuilderWrapper;
 import net.kineticraft.lostcity.utils.PacketUtil;
 import net.kineticraft.lostcity.utils.TextBuilder;
 import net.kineticraft.lostcity.utils.TextUtils;
@@ -113,7 +114,7 @@ public class ItemBook extends ItemWrapper {
      * @param cb
      * @return this
      */
-    public ItemBook addText(ComponentBuilder cb) {
+    public ItemBook addText(ComponentBuilderWrapper cb) {
         return addText(cb.create());
     }
 
@@ -345,3 +346,4 @@ public class ItemBook extends ItemWrapper {
         PacketUtil.openBook(player, generateFullBook());
     }
 }
+

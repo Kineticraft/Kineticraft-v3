@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.mechanics.Callbacks;
 import org.bukkit.ChatColor;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Tameable;
 public class CommandRescue extends StaffCommand {
 
     public CommandRescue() {
-        super("", "Rescue a tamed animal.", "rescue", "disown");
+        super(EnumRank.JR_BUILDER, "", "Rescue a tamed animal.", "rescue", "disown");
     }
 
     @Override

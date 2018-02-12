@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
  */
 public class CommandSpectator extends StaffCommand {
     public CommandSpectator() {
-        super(EnumRank.MEDIA, "", "Toggle spectator mode.", "spec", "gm3", "spectator");
+        super(EnumRank.JR_BUILDER, "", "Toggle spectator mode.", "spec", "gm3", "spectator");
     }
 
     @Override
