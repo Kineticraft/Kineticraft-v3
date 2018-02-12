@@ -1,5 +1,4 @@
 &8Changes:
-
  - New Staff Roles!
     - Junior Builder
     - Junior Dev
@@ -10,9 +9,10 @@
     - SuperAnimeBoi -> Admin
     - Kiaria -> HR
     - FearsomeMango -> Dev
-
  - Fixed Claim/Trust Abandoning Issue
  - Code changes to allow for Spigot update
- - Updated plugins and PaperSpigot
+ - Updated plugins and PaperSpigot, installed AWE plugin.
  - Made changes for implementing New Roles
- - Changes to Discord: delete #music-central added new staff roles / tags (with color coordinating to in-game colors)
+ - Changes to Discord: 
+    - Delete #music-central and Music Chat
+    - Added new staff roles / tags (with color coordinating to in-game colors)
