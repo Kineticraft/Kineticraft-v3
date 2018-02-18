@@ -52,24 +52,24 @@ public class Voting extends Mechanic {
      * @param username
      */
     public static void handleVote(String username) {
-        TextBuilder textBuilder = new TextBuilder(username).color(ChatColor.AQUA)
-                .append(" voted and received a reward! Vote ").color(ChatColor.GRAY).append("HERE").underline().bold()
-                .openURL(Configs.getMainConfig().getVoteURL()).color(ChatColor.AQUA);
-        Core.broadcast(textBuilder.create());
-
-        VoteConfig data = Configs.getVoteData();
-        data.setTotalVotes(data.getTotalVotes() + 1); // Increment the total vote count
-
-        int toParty = data.getVotesUntilParty();
-        if (toParty > 0) {
-            if (toParty % 5 == 0 || toParty <= 10)
-                Dog.KINETICA.say("Thanks for voting " + ChatColor.YELLOW + username + ChatColor.WHITE + "! We need "
-                        + ChatColor.YELLOW + toParty + ChatColor.WHITE + " more votes for a party.");
-        } else {
-            doVoteParty();
-        }
-
         QueryTools.getData(username, player -> {
+            TextBuilder textBuilder = new TextBuilder(username).color(ChatColor.AQUA)
+                    .append(" voted and received a reward! Vote ").color(ChatColor.GRAY).append("HERE").underline().bold()
+                    .openURL(Configs.getMainConfig().getVoteURL()).color(ChatColor.AQUA);
+            Core.broadcast(textBuilder.create());
+
+            VoteConfig data = Configs.getVoteData();
+            data.setTotalVotes(data.getTotalVotes() + 1); // Increment the total vote count
+
+            int toParty = data.getVotesUntilParty();
+            if (toParty > 0) {
+                if (toParty % 5 == 0 || toParty <= 10) {
+                    Dog.KINETICA.say("Thanks for voting " + ChatColor.YELLOW + username + ChatColor.WHITE + "! We need " +
+                            ChatColor.YELLOW + toParty + ChatColor.WHITE + " more votes for a party.");
+                }
+            } else {
+                doVoteParty();
+            }
             if (!username.equalsIgnoreCase(player.getUsername()))
                 return; // Players are using a short-hand version of their name to get the reward twice.
 

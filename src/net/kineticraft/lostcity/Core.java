@@ -90,7 +90,7 @@ public class Core extends JavaPlugin {
      * @param message
      */
     public static void alertStaff(String message) {
-        alert(EnumRank.JR_MOD, null, ChatColor.RED + message);
+        alert(EnumRank.JR_BUILDER, null, ChatColor.RED + message);
     }
 
     /**
