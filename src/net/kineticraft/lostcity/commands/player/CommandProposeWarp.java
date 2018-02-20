@@ -78,8 +78,9 @@ public class CommandProposeWarp extends PlayerCommand {
                             ChatColor.AQUA + "1) A safe spawn-in and warp area (well-lit, no mobs, no player harm). \n" +
                             ChatColor.DARK_AQUA + "2) Warps must be fully claimed. \n" +
                             ChatColor.AQUA + "3) You need to apply as a warp owner and need be an active player. \n" +
-                            ChatColor.DARK_AQUA + "4) Warp Owners will reapply for warp permits each quarter to prevent dead warps. A quarter takes place Jan-March, April-June, July-Sept, Oct-Dec. \n" + ChatColor.RESET);
-
+                            ChatColor.DARK_AQUA + "4) Warp Owners will reapply for warp permits each quarter to prevent dead warps. A quarter takes place Jan-March, April-June, July-Sept, Oct-Dec. \n" + 
+                            ChatColor.AQUA + "5) If you fail to pass an application more than 2 times in one quarter, you must wait to reapply next quarter. \n" + ChatColor.RESET);
+                       
                     sender.sendMessage(prefix + ChatColor.GOLD + "Do you accept all requirements for the warps? " + ChatColor.RESET);
 
                     Callbacks.promptConfirm(player,
