@@ -1,18 +1,8 @@
 &8Changes:
- - New Staff Roles!
-    - Junior Builder
-    - Junior Dev
-    - HR
- - Promotions:
-    - Gauthrange -> Admin
-    - Gryffit -> Admin
-    - SuperAnimeBoi -> Admin
-    - Kiaria -> HR
-    - FearsomeMango -> Dev
- - Fixed Claim/Trust Abandoning Issue
- - Code changes to allow for Spigot update
- - Updated plugins and PaperSpigot, installed AWE plugin.
- - Made changes for implementing New Roles
- - Changes to Discord: 
-    - Delete #music-central and Music Chat
-    - Added new staff roles / tags (with color coordinating to in-game colors)
+-Promotions:
+ -xCassyx -> Jr. Dev.
+ -juhobuild -> Jr. Builder
+ -_Magic_Turtle_ -> Jr. Builder
+-Fixed staff permissions
+-Apply for warps using the /warpform command!
+ -Warp applications...for Warps (Wahhhhhttt? It's a thing!)
