@@ -1,6 +1,18 @@
 &8Changes:
- - Added Warpforms (Whaattt???)
- - Reverted back to old claim system until fix
- - Added new icon link for donors
- - Changed Auto_Relog to AFK_Bypass
- - Xrayers teleport to spawn on punish
+ - New Staff Roles!
+    - Junior Builder
+    - Junior Dev
+    - HR
+ - Promotions:
+    - Gauthrange -> Admin
+    - Gryffit -> Admin
+    - SuperAnimeBoi -> Admin
+    - Kiaria -> HR
+    - FearsomeMango -> Dev
+ - Fixed Claim/Trust Abandoning Issue
+ - Code changes to allow for Spigot update
+ - Updated plugins and PaperSpigot, installed AWE plugin.
+ - Made changes for implementing New Roles
+ - Changes to Discord: 
+    - Delete #music-central and Music Chat
+    - Added new staff roles / tags (with color coordinating to in-game colors)
