@@ -27,6 +27,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -120,6 +121,17 @@ public class GeneralMechanics extends Mechanic {
 
         EnumRank.createTeams(); // Create all the rank teams, in order.
     }
+
+    /********************************************
+     * Temporary disabling of elytras in the end
+     *******************************************/
+
+    @EventHandler(ignoreCancelled = true)
+    public void onElytraToggle(EntityToggleGlideEvent evt) {
+        evt.setCancelled(evt.isGliding() && "world_the_end".equalsIgnoreCase(evt.getEntity().getWorld().getName()));
+    }
+
+    /*******************************************/
 
     @EventHandler // Handle repeating songs.
     public void onSongEnd(SongEndEvent evt) {
