@@ -16,6 +16,7 @@ import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import net.kineticraft.lostcity.utils.ServerUtils;
 import net.kineticraft.lostcity.utils.TextUtils;
 import net.kineticraft.lostcity.utils.Utils;
+import net.minecraft.server.v1_12_R1.Blocks;
 import org.bukkit.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,6 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
@@ -124,11 +126,21 @@ public class GeneralMechanics extends Mechanic {
 
     /********************************************
      * Temporary disabling of elytras in the end
+     * And the disabling of slime placement
      *******************************************/
 
     @EventHandler(ignoreCancelled = true)
     public void onElytraToggle(EntityToggleGlideEvent evt) {
         evt.setCancelled(evt.isGliding() && "world_the_end".equalsIgnoreCase(evt.getEntity().getWorld().getName()));
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockPlace(BlockPlaceEvent evt) {
+        Core.logInfo(evt.getBlockPlaced().getType().toString());
+        if("world_the_end".equalsIgnoreCase(evt.getPlayer().getWorld().getName()) && Material.SLIME_BLOCK.equals(evt.getBlockPlaced().getType())) {
+            evt.setCancelled(true);
+            evt.getPlayer().sendMessage(ChatColor.RED + "The placement of slime blocks has been disabled to prevent the creation of flying machines.");
+        }
     }
 
     /*******************************************/
