@@ -125,25 +125,16 @@ public class GeneralMechanics extends Mechanic {
     }
 
     /********************************************
-     * Temporary disabling of elytras in the end
-     * And the disabling of slime placement
+     * Disabling of slime placement
      *******************************************/
 
     @EventHandler(ignoreCancelled = true)
-    public void onElytraToggle(EntityToggleGlideEvent evt) {
-        evt.setCancelled(evt.isGliding() && "world_the_end".equalsIgnoreCase(evt.getEntity().getWorld().getName()));
-    }
-
-    @EventHandler(ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent evt) {
-        Core.logInfo(evt.getBlockPlaced().getType().toString());
         if("world_the_end".equalsIgnoreCase(evt.getPlayer().getWorld().getName()) && Material.SLIME_BLOCK.equals(evt.getBlockPlaced().getType())) {
             evt.setCancelled(true);
             evt.getPlayer().sendMessage(ChatColor.RED + "The placement of slime blocks has been disabled to prevent the creation of flying machines.");
         }
     }
-
-    /*******************************************/
 
     @EventHandler // Handle repeating songs.
     public void onSongEnd(SongEndEvent evt) {
