@@ -16,6 +16,7 @@ import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import net.kineticraft.lostcity.utils.ServerUtils;
 import net.kineticraft.lostcity.utils.TextUtils;
 import net.kineticraft.lostcity.utils.Utils;
+import net.minecraft.server.v1_12_R1.Blocks;
 import org.bukkit.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,8 +26,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -119,6 +122,18 @@ public class GeneralMechanics extends Mechanic {
         idObjective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 
         EnumRank.createTeams(); // Create all the rank teams, in order.
+    }
+
+    /********************************************
+     * Disabling of slime placement
+     *******************************************/
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockPlace(BlockPlaceEvent evt) {
+        if("world_the_end".equalsIgnoreCase(evt.getPlayer().getWorld().getName()) && Material.SLIME_BLOCK.equals(evt.getBlockPlaced().getType())) {
+            evt.setCancelled(true);
+            evt.getPlayer().sendMessage(ChatColor.RED + "The placement of slime blocks has been disabled to prevent the creation of flying machines.");
+        }
     }
 
     @EventHandler // Handle repeating songs.
