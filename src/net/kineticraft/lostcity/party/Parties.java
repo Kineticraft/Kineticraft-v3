@@ -7,6 +7,7 @@ import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.discord.DiscordAPI;
 import net.kineticraft.lostcity.discord.DiscordChannel;
 import net.kineticraft.lostcity.events.CommandRegisterEvent;
+import net.kineticraft.lostcity.mechanics.CurrentEvent;
 import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import net.kineticraft.lostcity.party.games.PartyGame;
 import net.kineticraft.lostcity.utils.ServerUtils;
@@ -47,9 +48,9 @@ public class Parties extends Mechanic {
             getParty().setup(); // Automatically setup party on server load.
 
         Bukkit.getScheduler().runTaskTimer(Core.getInstance(), () -> {
-            if (isPartyTime())
-                Bukkit.broadcastMessage(ChatColor.AQUA + "There is a party going on! Do " + ChatColor.YELLOW + "/party" + ChatColor.AQUA + " to attend!");
-        }, 0L, 6000L);
+            if (CurrentEvent.isEventActive())
+                Bukkit.broadcastMessage(CurrentEvent.getPartyMessage());
+        }, 600L, 12000L);
     }
 
     @EventHandler

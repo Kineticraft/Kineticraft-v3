@@ -72,12 +72,12 @@ public class CommandProposeWarp extends PlayerCommand {
         //This command is to give a prompt to confirm or cancel this request (if confirm continue, if cancel it sends back the usage to the user?)
         Callbacks.promptConfirm(player,
             //either need to test this code into the accept function or come up with a way to store a variable to pass through here
-            () -> { sender.sendMessage(  ChatColor.GOLD +" Please stand where you would like your ideal warp before continuing.");
+            () -> { sender.sendMessage(  ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + " Please stand where you would like your ideal warp before continuing.");
                 //if accepting, continue warpform
                 sender.sendMessage(prefix +  ChatColor.BOLD + " \n Warp Requirements: \n" +
                         ChatColor.AQUA + "1) A safe spawn-in and warp area (well-lit, no mobs, no player harm). \n" +
                         ChatColor.DARK_AQUA + "2) Warps must be fully claimed. \n" +
-                        ChatColor.AQUA + "3) You need to apply as a warp owner and need be an active player. \n" +
+                        ChatColor.AQUA + "3) You need to apply as the claim owner and you need to be an active player. \n" +
                         ChatColor.DARK_AQUA + "4) Warp Owners will reapply for warp permits each quarter to prevent dead warps. A quarter takes place Jan-March, April-June, July-Sept, Oct-Dec. \n" +
                         ChatColor.AQUA + "5) If you fail to pass an application more than 2 times in one quarter, you must wait to reapply next quarter. \n" + ChatColor.RESET);
 

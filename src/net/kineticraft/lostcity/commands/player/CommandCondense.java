@@ -36,6 +36,7 @@ public class CommandCondense extends PlayerCommand {
     static {
         //noinspection deprecation
         CONDENSE.put(new ItemStack(Material.INK_SACK, 1, DyeColor.BLUE.getDyeData()), Material.LAPIS_BLOCK); // Lapis
+        CONDENSE.put(new ItemStack(Material.WHEAT, 1), Material.HAY_BLOCK);
 
         // Take all of the blocks and add them to the condense list.
         for (Material m : BLOCKS)
