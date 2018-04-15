@@ -2,6 +2,8 @@ package net.kineticraft.lostcity.mechanics;
 
 import com.xxmicloxx.NoteBlockAPI.NoteBlockPlayerMain;
 import com.xxmicloxx.NoteBlockAPI.SongEndEvent;
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.config.Configs;
@@ -23,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.*;
@@ -32,6 +35,8 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +49,16 @@ public class GeneralMechanics extends Mechanic {
 
     @Override
     public void onEnable() {
+        // New claim expiration system. This only runs on startup.
+        Bukkit.getScheduler().runTaskLater(Core.getInstance(), () -> {
+            ArrayList<Claim> claims = new ArrayList<>(GriefPrevention.instance.dataStore.getClaims());
+            int expireCount = 0;
+            for(Claim claim : claims) {
+                if(attemptExpire(claim))
+                    ++ expireCount;
+            }
+            Core.logInfo(expireCount + " claims have expired.");
+        }, 1000L);
 
         // Increment time played.
         Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance(), () ->
@@ -81,6 +96,9 @@ public class GeneralMechanics extends Mechanic {
             }
         }, 50L);
 
+        // Attempt to expire claims. (Old version)
+        // Core.logInfo(new ArrayList<>(GriefPrevention.instance.dataStore.getClaims()).stream().filter(GeneralMechanics::attemptExpire).count() + " claims expired.")
+
         // Don't allow players on top of the nether.
         Bukkit.getScheduler().runTaskTimer(Core.getInstance(), () ->
                 Bukkit.getOnlinePlayers().stream().filter(p -> p.getLocation().getBlockY() >= 127)
@@ -101,6 +119,18 @@ public class GeneralMechanics extends Mechanic {
         idObjective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 
         EnumRank.createTeams(); // Create all the rank teams, in order.
+    }
+
+    /********************************************
+     * Disabling of slime placement
+     *******************************************/
+
+    @EventHandler(ignoreCancelled = true)
+    public void onBlockPlace(BlockPlaceEvent evt) {
+        if("world_the_end".equalsIgnoreCase(evt.getPlayer().getWorld().getName()) && Material.SLIME_BLOCK.equals(evt.getBlockPlaced().getType())) {
+            evt.setCancelled(true);
+            evt.getPlayer().sendMessage(ChatColor.RED + "The placement of slime blocks has been disabled to prevent the creation of flying machines.");
+        }
     }
 
     @EventHandler // Handle repeating songs.
@@ -226,5 +256,26 @@ public class GeneralMechanics extends Mechanic {
         PlayerChangeRegionEvent change = new PlayerChangeRegionEvent(evt);
         if (!change.getRegionFrom().equals(change.getRegionTo()))
            Bukkit.getPluginManager().callEvent(change);
+    }
+
+    private static boolean attemptExpire(Claim claim) {
+        if (claim.isAdminClaim())
+            return false; // These claims are exempt.
+        ArrayList<String> preventList = new ArrayList<>();
+        preventList.add(claim.ownerID.toString());
+        claim.getPermissions(preventList, preventList, new ArrayList<>(), preventList); // Should all be pointed to the same list, except accessors which we ignore.
+        for(String id : preventList) {
+            long lastPlayed = Bukkit.getOfflinePlayer(UUID.fromString(id)).getLastPlayed();
+            // millis -> sec, sec -> min, min -> hour, hour -> day
+            long days = (System.currentTimeMillis() - lastPlayed) / 1000 / 60 / 60 / 24;
+            // Uncomment the second operand of the OR operator to check and see if the specified player is online.
+            // This is probably not needed considering the expiration time is 60 days, and it's more efficient to leave it out.
+            // It should be uncommented for testing, however, so that the claim does not expire while the trustees are online.
+            if(days < 60/* || Bukkit.getOnlinePlayers().contains(Bukkit.getPlayer(UUID.fromString(id)))*/)
+                return false;
+        }
+        Core.logInfo(Bukkit.getOfflinePlayer(claim.ownerID).getName() + "\'s claim expired.");
+        GriefPrevention.instance.dataStore.deleteClaim(claim);
+        return true;
     }
 }

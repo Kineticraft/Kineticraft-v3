@@ -3,6 +3,7 @@ package net.kineticraft.lostcity.commands.trigger;
 import net.kineticraft.lostcity.commands.TriggerCommand;
 import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.mechanics.Callbacks;
+import net.kineticraft.lostcity.mechanics.CurrentEvent;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -23,6 +24,11 @@ public class CommandTPAHereTrigger extends TriggerCommand {
 
         if (!Utils.isVisible(player, other))
             return;
+
+        if(!CurrentEvent.canPlayerTPOut(other.getPlayer())) {
+            player.sendMessage(ChatColor.RED + "This player is currently in an event. They cannot teleport out.");
+            return;
+        }
 
         Player receiver = other.getPlayer();
         player.sendMessage(ChatColor.GOLD + "Request sent!");

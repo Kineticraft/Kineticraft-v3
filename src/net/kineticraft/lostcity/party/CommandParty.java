@@ -1,10 +1,12 @@
 package net.kineticraft.lostcity.party;
 
 import net.kineticraft.lostcity.commands.PlayerCommand;
+import net.kineticraft.lostcity.mechanics.CurrentEvent;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import sun.util.resources.cldr.tn.CurrencyNames_tn;
 
 /**
  * Teleport to a party.
@@ -18,13 +20,9 @@ public class CommandParty extends PlayerCommand {
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
         Player p = (Player) sender;
-        if (Parties.isPartyTime()) {
-            Parties.getParty().teleportIn(p);
-        } else if (Utils.isStaff(sender)) {
-            p.teleport(Parties.getPartyWorld().getSpawnLocation());
-            sender.sendMessage("There is no active party, so you have been teleported to the spawn-location.");
-        } else {
-            sender.sendMessage(ChatColor.RED + "There is no party right now.");
-        }
+        if(CurrentEvent.isEventActive())
+            p.teleport(CurrentEvent.getEventWarpLocation());
+        else
+            p.sendMessage(ChatColor.RED + "There is no active event at this time.");
     }
 }

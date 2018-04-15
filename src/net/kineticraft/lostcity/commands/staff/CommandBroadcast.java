@@ -13,7 +13,7 @@ import org.bukkit.command.CommandSender;
 public class CommandBroadcast extends StaffCommand {
 
     public CommandBroadcast() {
-        super(EnumRank.MEDIA, "<message>", "Broadcast a message accross the entire server.", "broadcast");
+        super("<message>", "Broadcast a message accross the entire server.", "broadcast");
     }
 
     @Override

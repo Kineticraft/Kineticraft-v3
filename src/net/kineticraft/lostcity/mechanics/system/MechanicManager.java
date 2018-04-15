@@ -76,6 +76,9 @@ public class MechanicManager implements Listener {
         addMechanic(Parties.class);
         addMechanic(AFK.class);
         addMechanic(MetadataManager.class);
+
+        // Remove this after the event
+        addMechanic(CurrentEvent.class);
     }
 
     /**

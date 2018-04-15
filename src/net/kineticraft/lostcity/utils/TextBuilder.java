@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  *
  * Created by Kneesnap on 6/12/2017.
  */
-public class TextBuilder extends ComponentBuilder {
+public class TextBuilder extends ComponentBuilderWrapper {
 
     public TextBuilder() {
         this("");
@@ -39,7 +39,7 @@ public class TextBuilder extends ComponentBuilder {
 
     @Override // Don't retain any previous formatting.
     public TextBuilder append(String text) {
-        append(text, FormatRetention.NONE);
+        append(text, ComponentBuilder.FormatRetention.NONE);
         return this;
     }
 
@@ -52,7 +52,7 @@ public class TextBuilder extends ComponentBuilder {
      */
     public TextBuilder append(BaseComponent component) {
         append(""); // Make the current editted field fresh (Don't delete the current one.)
-        ReflectionUtil.setField(this, ComponentBuilder.class, "current", component); // Set the currently editted field.
+        ReflectionUtil.setField(unwrap(), ComponentBuilder.class, "current", component); // Set the currently editted field.
 
         return this;
     }
@@ -286,7 +286,7 @@ public class TextBuilder extends ComponentBuilder {
      * @return text
      */
     public TextComponent getCurrent() {
-        return (TextComponent) ReflectionUtil.getField(this, TextComponent.class, "current");
+        return (TextComponent) ReflectionUtil.getField(unwrap(), TextComponent.class, "current");
     }
 
     /**
@@ -298,7 +298,7 @@ public class TextBuilder extends ComponentBuilder {
     @SuppressWarnings("unchecked")
     public List<BaseComponent> getParts() {
         append("");
-        return (List<BaseComponent>) ReflectionUtil.getField(this, ComponentBuilder.class, "parts");
+        return (List<BaseComponent>) ReflectionUtil.getField(unwrap(), ComponentBuilder.class, "parts");
     }
 
     /**
@@ -309,3 +309,4 @@ public class TextBuilder extends ComponentBuilder {
         return getParts().toArray(new BaseComponent[0]);
     }
 }
+

@@ -117,6 +117,7 @@ public class Commands extends Mechanic {
         addCommand(new CommandNBS());
         addCommand(new CommandNear());
         addCommand(new CommandNotes());
+        addCommand(new CommandOpenEvent());
         addCommand(new CommandPose());
         addCommand(new CommandPunish());
         addCommand(new CommandPurchase());
@@ -133,7 +134,6 @@ public class Commands extends Mechanic {
         addCommand(new CommandVoteParty());
         addCommand(new CommandJS());
         addCommand(new CommandReloadData());
-        addCommand(new CommandZen());
         addCommand(new CommandCheck());
 
         // Register trigger commands

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class CommandSetRank extends StaffCommand {
 
     public CommandSetRank() {
-        super(EnumRank.MOD, "<player> <rank>", "Set a player's rank.", "setrank");
+        super("<player> <rank>", "Set a player's rank.", "setrank");
         autocompleteOnline();
         autocomplete(EnumRank.values());
     }

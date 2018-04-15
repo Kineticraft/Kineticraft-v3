@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 public class CommandTeleport extends StaffCommand {
 
     public CommandTeleport() {
-        super("<player>", "Teleport to another player.", "to");
+        super(EnumRank.JR_BUILDER, "<player>", "Teleport to another player.", "to");
         autocompleteOnline();
     }
 

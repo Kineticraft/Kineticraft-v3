@@ -148,6 +148,12 @@ public class Utils {
         return safe.add(0, 0.5, 0);
     }
 
+    public static ItemStack resize(ItemStack stack, int newSize) {
+        ItemStack itemStack = stack.clone();
+        itemStack.setAmount(newSize);
+        return itemStack;
+    }
+
     /**
      * Teleport the player to the specified location with cooldowns applied.
      * @param player
@@ -529,7 +535,7 @@ public class Utils {
      */
     public static EnumRank getRank(CommandSender sender) {
         return hasWrapper(sender) ? KCPlayer.getWrapper(sender).getRank()
-                : (sender instanceof ConsoleCommandSender || sender instanceof BlockCommandSender ? EnumRank.DEV : EnumRank.MU);
+                : (sender instanceof ConsoleCommandSender || sender instanceof BlockCommandSender ? EnumRank.VALUES[EnumRank.VALUES.length - 1] : EnumRank.MU);
     }
 
     /**

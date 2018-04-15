@@ -26,7 +26,7 @@ public class CommandServerVote extends DiscordCommand {
     private static final int MAX_VOTE_HOURS = 24;
 
     public CommandServerVote() {
-        super(EnumRank.TRIAL, "<bill>", "Initiate a server proposal.", "vote");
+        super(EnumRank.JR_MOD, "<bill>", "Initiate a server proposal.", "vote");
         setDeleteMessage(true);
         Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance(),
                 CommandServerVote::scanChannel, 0L, 20 * 60 * 5L);

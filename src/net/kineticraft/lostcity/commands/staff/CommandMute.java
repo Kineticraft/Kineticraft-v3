@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.staff;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
 import net.kineticraft.lostcity.data.QueryTools;
 import net.kineticraft.lostcity.utils.Utils;
@@ -13,7 +14,7 @@ import org.bukkit.command.CommandSender;
 public class CommandMute extends StaffCommand {
 
     public CommandMute() {
-        super("<player> <time> [reason]", "Mute a player.", "mute");
+        super(EnumRank.JR_BUILDER, "<player> <time> [reason]", "Mute a player.", "mute");
         autocompleteOnline();
     }
 
