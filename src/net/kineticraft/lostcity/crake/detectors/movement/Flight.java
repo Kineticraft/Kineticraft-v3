@@ -4,6 +4,7 @@ import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.crake.detectors.Detector;
 import net.kineticraft.lostcity.crake.internal.Detection;
 import net.kineticraft.lostcity.crake.internal.DetectionStore;
+import net.kineticraft.lostcity.mechanics.CurrentEvent;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -96,6 +97,7 @@ public class Flight extends Detector {
                 || player.getVehicle() != null // Not in a vehicle
                 || player.getVelocity().getY() > 0 // Not being launched up
                 || player.getNearbyEntities(1, 2, 1).stream().anyMatch(e -> e.getType() == EntityType.BOAT) // Not standing on a boat.
-                || player.getLocation().getBlock().isLiquid(); // Not in water.
+                || player.getLocation().getBlock().isLiquid() // Not in water.
+                || CurrentEvent.canFly(player);
     }
 }

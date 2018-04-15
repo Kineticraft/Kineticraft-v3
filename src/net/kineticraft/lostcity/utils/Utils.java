@@ -148,6 +148,12 @@ public class Utils {
         return safe.add(0, 0.5, 0);
     }
 
+    public static ItemStack resize(ItemStack stack, int newSize) {
+        ItemStack itemStack = stack.clone();
+        itemStack.setAmount(newSize);
+        return itemStack;
+    }
+
     /**
      * Teleport the player to the specified location with cooldowns applied.
      * @param player

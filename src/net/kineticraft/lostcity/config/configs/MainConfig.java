@@ -26,4 +26,5 @@ public class MainConfig extends JsonConfig {
     private Party party;
     private StringList swearWords = new StringList();
     private JsonMap<ItemStack> dungeonRewards = new JsonMap<>();
+    private boolean isCurrentEventActive = false;
 }
