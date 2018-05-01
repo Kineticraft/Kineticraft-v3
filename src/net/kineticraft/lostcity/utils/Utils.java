@@ -973,7 +973,7 @@ public class Utils {
      * @param cmd
      * @param onFinish
      */
-    public static void runShell(String cmd, Runnable onFinish) {
+    /*public static void runShell(String cmd, Runnable onFinish) {
         Bukkit.getScheduler().runTaskAsynchronously(Core.getInstance(), () -> {
             try {
                 final ProcessBuilder childBuilder = new ProcessBuilder(cmd);
@@ -999,7 +999,7 @@ public class Utils {
                     Bukkit.getScheduler().runTask(Core.getInstance(), onFinish);
             }
         });
-    }
+    }*/
 
     /**
      * Teleport an entity to spawn.

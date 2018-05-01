@@ -31,7 +31,7 @@ public class CommandProposeWarp extends PlayerCommand {
         super( EnumRank.GAMMA, "[command]", "Submit a warp permit!","warpform");
     }
     //initializing variables
-    private static List<String> types = Arrays.asList("event", "shop", "showcase", "town", "other");
+    private static List<String> types = Arrays.asList("event", "shop", "showcase", "town", "farm");
 
     private static List<String> greetingMessages = Arrays.asList(
             "Hi there, ",
@@ -109,7 +109,7 @@ public class CommandProposeWarp extends PlayerCommand {
                                             () -> formWarp(sender, "farm"),
                                             () -> { sender.sendMessage(prefix + Utils.randElement(declineMessages)); },
                                             "Public Farm", "Exit Submission"
-                                        ), "Town", "Public Farm"
+                                        ), "Town", "Next"
                                     ), "Showcase", "Next"
                                 ),"Shop", "Next"
                             ), "Event", "Next"

@@ -98,6 +98,6 @@ public class Flight extends Detector {
                 || player.getVelocity().getY() > 0 // Not being launched up
                 || player.getNearbyEntities(1, 2, 1).stream().anyMatch(e -> e.getType() == EntityType.BOAT) // Not standing on a boat.
                 || player.getLocation().getBlock().isLiquid() // Not in water.
-                || CurrentEvent.canFly(player);
+                || (CurrentEvent.isEventActive() && CurrentEvent.canFly(player));
     }
 }

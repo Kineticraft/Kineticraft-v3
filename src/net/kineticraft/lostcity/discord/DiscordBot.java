@@ -212,10 +212,16 @@ public class DiscordBot extends ListenerAdapter {
             }
 
             if (!Commands.handleCommand(sender, CommandType.SLASH, message) && !CommandType.DISCORD.matches(message)) {
-                if (message.length() > 0)
-                    Bukkit.getScheduler().runTask(Core.getInstance(), () -> Bukkit.broadcastMessage(
-                            ChatColor.GRAY.toString() + ChatColor.BOLD + "DISCORD" + ChatColor.GRAY + " "
-                                    + Utils.getSenderName(sender) + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
+                if (message.length() > 0) {
+                    String msg = ChatColor.GRAY.toString() + ChatColor.BOLD + "DISCORD" + ChatColor.GRAY + " "
+                            + Utils.getSenderName(sender) + ChatColor.GRAY + ": " + ChatColor.WHITE + message;
+                    Bukkit.getScheduler().runTask(Core.getInstance(), () -> {
+                        Bukkit.getOnlinePlayers().stream().forEach(player -> {
+                            if(!KCPlayer.getWrapper(player).getIgnored().containsIgnoreCase(p.getUsername()))
+                                player.sendMessage(msg);
+                        });
+                    });
+                }
                 return;
             }
         }

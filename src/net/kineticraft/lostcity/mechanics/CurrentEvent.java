@@ -167,7 +167,7 @@ public class CurrentEvent extends Mechanic {
         }
     }
 
-    private static void giveSkull(Player player, String ownerID, String texturs, String name, String... lores) {
+    public static void giveSkull(Player player, String ownerID, String texturs, String name, String... lores) {
         NBTTagCompound tag = new NBTTagCompound();
         NBTTagCompound display = new NBTTagCompound();
         display.setString("Name", name);

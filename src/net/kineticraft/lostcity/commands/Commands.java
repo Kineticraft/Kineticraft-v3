@@ -102,7 +102,6 @@ public class Commands extends Mechanic {
 
         // Register staff commands
         addCommand(new CommandBack());
-        addCommand(new CommandBackup());
         addCommand(new CommandBright());
         addCommand(new CommandBroadcast());
         addCommand(new CommandDeathTeleport());

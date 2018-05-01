@@ -52,15 +52,15 @@ public class ServerManager extends Mechanic {
             lastPoll = startTime;
         }, 0L, TPS_INTERVAL);
 
-        if (!ServerUtils.isDevServer()) {
-            Utils.runCalendarTaskAt(TimeInterval.HOUR, 6, ServerUtils::takeBackup); // Backup the server at 6AM daily.
+        /*if (!ServerUtils.isDevServer()) {
+            //Utils.runCalendarTaskAt(TimeInterval.HOUR, 6, ServerUtils::takeBackup); // Backup the server at 6AM daily.
 
             // Automatically reboot after a while.
             Bukkit.getScheduler().runTaskTimer(Core.getInstance(), () -> {
                 if (ServerUtils.getTicksToReboot() <= REBOOT_TIME * 20 && !ServerUtils.isRebootScheduled())
                     ServerUtils.reboot(REBOOT_TIME);
             }, 0L, 20L);
-        }
+        }*/
     }
 
     /**
