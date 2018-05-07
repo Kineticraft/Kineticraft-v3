@@ -52,7 +52,7 @@ public class DiscordBot extends ListenerAdapter {
 
         try {
             bot = new JDABuilder(AccountType.BOT).setToken(Configs.getMainConfig().getDiscordToken())
-                    .addEventListener(this).setAutoReconnect(true).setGame(Game.of("Kineticraft"))
+                    .addEventListener(this).setAutoReconnect(true).setGame(Game.of(Game.GameType.DEFAULT, "Kineticraft"))
                     .setStatus(OnlineStatus.ONLINE).buildAsync(); // Setup listener and connect to discord.
             active = true;
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class DiscordBot extends ListenerAdapter {
 
         DiscordChannel channel = DiscordChannel.getChannel(getLastChannel());
         DiscordSender sender = new DiscordSender(event.getAuthor(), event.getMessage());
-        String noColor = ChatColor.stripColor(event.getMessage().getContent());
+        String noColor = ChatColor.stripColor(event.getMessage().getContentDisplay());
         final String message = noColor.substring(0, Math.min(128, noColor.length())); // Limit size of message.
 
         if (DiscordAPI.isVerified(event.getAuthor())) {
