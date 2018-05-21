@@ -20,7 +20,7 @@ public class CommandReport extends PlayerCommand {
         super("<player|location|glitch|other>", "Submit a report.","report");
     }
 
-    private static List<String> types = Arrays.asList("player", "location", "glitch", "other");
+    private static List<String> types = Arrays.asList("Player", "Location", "Glitch", "Staff", "Other");
     private static String prefix = ChatColor.DARK_RED.toString() + ChatColor.BOLD + "DOG" + ChatColor.GREEN + " "
             + "Report" + ChatColor.GRAY + ": " + ChatColor.WHITE;
     private static List<String> greetingMessages = Arrays.asList(
@@ -44,8 +44,9 @@ public class CommandReport extends PlayerCommand {
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
         Player player = (Player) sender;
+        reportStep(0, 0, player, false, null, null);
 
-        String type = args[0].toLowerCase();
+        /*String type = args[0].toLowerCase();
         if (types.contains(type)) {
             sender.sendMessage(prefix +
                     Utils.randElement(greetingMessages) +
@@ -62,21 +63,69 @@ public class CommandReport extends PlayerCommand {
             }
         } else {
             showUsage(sender);
+        }*/
+    }
+
+    private void reportStep(int step, int meta, Player player, boolean anon, String type, String subject) {
+        switch(step) {
+            case 0:
+                player.sendMessage(ChatColor.WHITE + "Do you wish to submit this report anonymously?");
+                Callbacks.promptConfirm(player, () -> {
+                    reportStep(step + 1, 0, player, true, type, subject);
+                }, () -> {
+                    reportStep(step + 1, 0, player, false, type, subject);
+                }, "Yes", "No");
+                break;
+            case 1:
+                if(anon)
+                    player.sendMessage(ChatColor.WHITE + "You are submitting an anonymous report, do you wish to continue?");
+                else
+                    player.sendMessage(ChatColor.WHITE + "This report will contain your in-game name, do you wish to continue?");
+                Callbacks.promptConfirm(player, () -> {
+                    reportStep(step + 1, 0, player, anon, type, subject);
+                }, () -> {
+                    player.sendMessage(ChatColor.WHITE + "Alrighty, then. Have a good day!");
+                }, "Yes", "No");
+                break;
+            case 2:
+                player.sendMessage(ChatColor.WHITE + "Please select what type of report you are submitting (" + String.join("|", types.toArray(new String[types.size()])) + "):");
+                Callbacks.promptConfirm(player, () -> {
+                    if(!"Player".equalsIgnoreCase(types.get(meta)))
+                        reportStep(step + 1, 0, player, anon, types.get(meta).toLowerCase(), subject);
+                    else{
+                        player.sendMessage(ChatColor.WHITE + "Please type the name of the player that you are reporting:");
+                        Callbacks.listenForChat(player, subj -> reportStep(step + 1, 0, player, anon, types.get(meta).toLowerCase(), subj));
+                    }
+                }, () -> {
+                    if(meta == types.size() - 1)
+                        reportStep(step + 1, 0, player, anon, types.get(types.size() - 1).toLowerCase(), subject);
+                    else
+                        reportStep(step, meta + 1, player, anon, type, subject);
+                }, types.get(meta), meta == types.size() - 1 ? types.get(types.size() - 1) : "Next");
+                break;
+            case 3:
+                player.sendMessage("Please start typing your report:");
+                Callbacks.listenForChat(player, descr -> submitReport(player, anon, type, subject, descr));
+                break;
         }
     }
 
-    private static void submitReport(Player reporter, String type, String subject, String description) {
+    private static void submitReport(Player reporter, boolean anonymous, String type, String subject, String description) {
         Location loc = reporter.getLocation();
-        String message = "" +
-                "New **" + type + "** report from `" + reporter.getName() + "`\n" +
-                "Time: `" + new Date().toString() + "`\n" +
-                (subject != null ? "Subject: `" + subject + "`\n" : "") +
-                "Teleport: `/tl " + loc.getBlockX() + " " + loc.getBlockY() + " " + loc.getBlockZ() + " " + (int) loc.getYaw() + " " + (int) loc.getPitch() + " " + loc.getWorld().getName() + "`\n" +
-                "Description:\n" +
-                "```\n" +
-                description + "\n" +
-                "```";
-        DiscordAPI.sendMessage(DiscordChannel.REPORTS, message);
+        StringBuilder sb = new StringBuilder();
+        sb.append("New **").append(type).append("**");
+        if(!anonymous)
+            sb.append(" report from `").append(reporter.getName()).append('`');
+        else
+            sb.append(" report (anonymous)");
+        sb.append('\n');
+        sb.append("Time: `").append(new Date()).append("`\n");
+        if(subject != null)
+            sb.append("Subject: `").append(subject).append("`\n");
+        sb.append("Teleport: `/tl ").append(loc.getBlockX()).append(' ').append(loc.getBlockY()).append(' ').append(loc.getBlockZ())
+          .append(' ').append((int)loc.getYaw()).append(' ').append((int)loc.getPitch()).append(' ').append(loc.getWorld().getName()).append("`\n");
+        sb.append("Description:\n```\n").append(description).append("\n```");
+        DiscordAPI.sendMessage(DiscordChannel.REPORTS, sb.toString());
         reporter.sendMessage(prefix + Utils.randElement(exitMessages));
     }
 
