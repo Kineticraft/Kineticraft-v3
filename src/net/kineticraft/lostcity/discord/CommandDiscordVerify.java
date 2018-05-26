@@ -9,6 +9,8 @@ import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.core.entities.Guild;
 
 /**
  * Allows players to register themselves as verified on discord.
@@ -50,6 +52,7 @@ public class CommandDiscordVerify extends DiscordCommand {
         Callbacks.promptConfirm(verify, () -> {
             verify.sendMessage(ChatColor.GOLD + "You are now verified on discord.");
             discord.sendMessage(discord.getName() + " is now verified as " + verify.getName() + "!");
+            GuildController.addSingleRoleToMember(discord.getUser(), guild.getRolesByName("Verified", true).get(0)); 
 
             pw.setDiscordId(discord.getUser().getIdLong());
             DataHandler.getDiscordMap().put(discord.getUser().getIdLong(), verify.getUniqueId());
