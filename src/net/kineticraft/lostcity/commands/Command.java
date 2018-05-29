@@ -3,6 +3,7 @@ package net.kineticraft.lostcity.commands;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
+import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -312,7 +313,7 @@ public abstract class Command {
      * @param arg
      */
     protected void autocompleteOnline(int arg) {
-        autocomplete(arg, p -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
+        autocomplete(arg, p -> Bukkit.getOnlinePlayers().stream().filter(pl -> !KCPlayer.getWrapper(pl).isVanished()).map(Player::getName).collect(Collectors.toList()));
     }
 
     /**
