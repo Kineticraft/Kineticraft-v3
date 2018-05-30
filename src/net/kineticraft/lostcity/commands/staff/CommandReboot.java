@@ -15,7 +15,7 @@ import org.bukkit.command.CommandSender;
 public class CommandReboot extends StaffCommand {
 
     public CommandReboot() {
-        super(EnumRank.HR, "<delay>", "See how much time is left until the next reboot.", "reboot", "shutdown");
+        super(EnumRank.ADMIN, "<delay>", "See how much time is left until the next reboot.", "reboot", "shutdown");
     }
 
     @Override

@@ -178,10 +178,16 @@ public class DiscordAPI extends Mechanic {
         if (!canEdit(user))
             return;
 
-        Set<Role> roleSet = getMember(user).getRoleSet();
+        List<Role> currentRoles = new ArrayList<>(getMember(user).getRoleSet());
+        List<Role> rolesToRemove = currentRoles.stream().filter(r -> Arrays.asList(roles).contains(r)).collect(Collectors.toList()),
+                   rolesToAdd = Arrays.asList(roles).stream().map(DiscordAPI::getRole).filter(r -> r != null && !currentRoles.contains(r)).collect(Collectors.toList());
+
+        getManager().modifyMemberRoles(getMember(user), rolesToAdd, rolesToRemove).queue();
+
+        /*getManager().removeRolesFromMember(getMember(user), getMember(user).getRoles());
         roleSet.clear();
         roleSet.addAll(Arrays.stream(roles).map(DiscordAPI::getRole).filter(Objects::nonNull).collect(Collectors.toList()));
-        getManager().addRolesToMember(getMember(user)).queue(); // Send the changes.
+        getManager().addRolesToMember(getMember(user), roleSet.toArray(new Role[roleSet.size()])).queue(); // Send the changes.*/
     }
 
     /**

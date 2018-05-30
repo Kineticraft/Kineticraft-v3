@@ -34,7 +34,6 @@ public enum EnumRank {
     BUILDER("BUILDER", ChatColor.GOLD, ChatColor.YELLOW),
     DEV("DEV", ChatColor.BLUE, ChatColor.BLUE),
     MOD("MOD", ChatColor.DARK_GREEN, ChatColor.GREEN),
-    HR("HR", ChatColor.DARK_GREEN, ChatColor.GREEN),
     ADMIN("ADMIN", ChatColor.DARK_RED,  ChatColor.RED);
 
     private final String rankSymbol;
