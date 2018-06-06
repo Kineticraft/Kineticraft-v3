@@ -21,18 +21,6 @@ public class CommandCondense extends PlayerCommand {
     private static final List<Material> BLOCKS = Arrays.asList(Material.REDSTONE, Material.COAL, Material.EMERALD,
             Material.IRON_INGOT, Material.GOLD_INGOT, Material.DIAMOND, Material.MELON, Material.SLIME_BALL);
     private static final Map<ItemStack, Material> CONDENSE = new HashMap<>();
-    private static final List<Material> ORGANIZER = Arrays.asList(
-            Material.DIAMOND_PICKAXE, Material.DIAMOND_AXE, Material.DIAMOND_SPADE, Material.DIAMOND_SWORD, Material.DIAMOND_HOE,
-            Material.GOLD_PICKAXE, Material.GOLD_AXE, Material.GOLD_SPADE, Material.GOLD_SWORD, Material.GOLD_HOE,
-            Material.IRON_PICKAXE, Material.IRON_AXE, Material.IRON_SPADE, Material.IRON_SWORD, Material.IRON_HOE,
-            Material.STONE_PICKAXE, Material.STONE_AXE, Material.STONE_SPADE, Material.STONE_SWORD, Material.STONE_HOE,
-            Material.WOOD_PICKAXE, Material.WOOD_AXE, Material.WOOD_SPADE, Material.WOOD_SWORD, Material.WOOD_HOE,
-            Material.BUCKET, Material.WATER_BUCKET, Material.LAVA_BUCKET, Material.MILK_BUCKET, Material.BLACK_SHULKER_BOX,
-            Material.BLUE_SHULKER_BOX, Material.BROWN_SHULKER_BOX, Material.CYAN_SHULKER_BOX, Material.GRAY_SHULKER_BOX,
-            Material.GREEN_SHULKER_BOX, Material.LIGHT_BLUE_SHULKER_BOX, Material.LIME_SHULKER_BOX, Material.MAGENTA_SHULKER_BOX,
-            Material.ORANGE_SHULKER_BOX, Material.PINK_SHULKER_BOX, Material.PURPLE_SHULKER_BOX, Material.RED_SHULKER_BOX,
-            Material.SILVER_SHULKER_BOX, Material.WHITE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX, Material.BOW
-    );
     static {
         //noinspection deprecation
         CONDENSE.put(new ItemStack(Material.INK_SACK, 1, DyeColor.BLUE.getDyeData()), Material.LAPIS_BLOCK); // Lapis
@@ -43,15 +31,8 @@ public class CommandCondense extends PlayerCommand {
             CONDENSE.put(new ItemStack(m, 1), Material.valueOf(m.name().split("_")[0] + "_BLOCK"));
     }
 
-    private static int getOrganizationLvl(Material material) {
-        if(material.isEdible())
-            return 0;
-        int idx = ORGANIZER.indexOf(material);
-        return idx == -1 ? idx : (ORGANIZER.size() + 1) - idx;
-    }
-
     public CommandCondense() {
-        super(EnumRank.ALPHA, "", "Condense all items in your inventory.", "stack", "condense");
+        super(EnumRank.ALPHA, "", "Condense all items in your inventory.", "condense");
     }
 
     @Override
@@ -75,8 +56,9 @@ public class CommandCondense extends PlayerCommand {
 
             ninv.add(new Pair<>(condense(i, inv), i));
         }
-        ninv.stream().sorted((a, b) -> getOrganizationLvl(b.fst.get(0).getType()) - getOrganizationLvl(a.fst.get(0).getType())).forEach(e -> {
-            if(getOrganizationLvl(e.fst.get(0).getType()) > -1)
+        ninv.stream().sorted((a, b) -> StackAndCondenseUtils.getOrganizationLvl(b.fst.get(0).getType()) -
+                StackAndCondenseUtils.getOrganizationLvl(a.fst.get(0).getType())).forEach(e -> {
+            if(StackAndCondenseUtils.getOrganizationLvl(e.fst.get(0).getType()) > -1)
                 invSetItem(inv, e.snd, e.fst.get(0));
             else{
                 for(ItemStack stack : e.fst)

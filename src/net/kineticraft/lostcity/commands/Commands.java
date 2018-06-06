@@ -91,6 +91,7 @@ public class Commands extends Mechanic {
         addCommand(new CommandShovel());
         addCommand(new CommandSkull());
         addCommand(new CommandSpawn());
+        addCommand(new CommandStack());
         addCommand(new CommandStats());
         addCommand(new CommandUnignore());
         addCommand(new CommandTPA());
