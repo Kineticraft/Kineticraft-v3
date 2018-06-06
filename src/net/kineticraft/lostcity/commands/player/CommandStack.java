@@ -35,20 +35,15 @@ public class CommandStack extends PlayerCommand {
             }
             ninv.put(i, istack);
         }
-        ninv.entrySet().stream().sorted((a, b) -> StackAndCondenseUtils.compareOrganizationLevels(a.getValue(), b.getValue()))
-                .forEach(s -> {
-                    ItemStack stack = s.getValue();
-                    System.out.println(stack.getType());
-                    int cidx = s.getKey(), stackSize = stack.getAmount();
-                    while(stackSize > 0) {
-                        stack.setAmount(stackSize > 64 ? 64 : stackSize);
-                        stackSize -= stack.getAmount();
-                        if(inv.getItem(cidx) == null)
-                            inv.setItem(cidx++, stack.clone());
-                        else
-                            Utils.giveItem(player, stack.clone());
-                    }
-                });
+        ninv.entrySet().stream().sorted((a, b) -> StackAndCondenseUtils.compareOrganizationLevels(a.getValue(), b.getValue())).forEach(s -> {
+            ItemStack stack = s.getValue();
+            int cidx = s.getKey(), stackSize = stack.getAmount();
+            while(stackSize > 0) {
+                stack.setAmount(stackSize > 64 ? 64 : stackSize);
+                stackSize -= stack.getAmount();
+                StackAndCondenseUtils.giveStack(player, cidx++, stack);
+            }
+        });
         player.updateInventory();
     }
 }
