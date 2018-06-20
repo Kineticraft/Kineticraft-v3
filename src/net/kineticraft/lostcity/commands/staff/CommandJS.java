@@ -8,6 +8,7 @@ import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.mechanics.system.MechanicManager;
 import net.kineticraft.lostcity.utils.ReflectionUtil;
 import net.kineticraft.lostcity.utils.Utils;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import javax.script.ScriptEngine;
@@ -30,13 +31,15 @@ public class CommandJS extends StaffCommand {
 
     public CommandJS() {
         super(EnumRank.DEV, "<expression>", "Evaluate a JavaScript expression.", "js");
-        initJS();
+        /** TEMPORARY DISABLEMENT **/
+        //initJS();
     }
 
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
+        sender.sendMessage(ChatColor.RED + "This command is temporarily disabled.");
         // Allow the sender to use the 'self' keyword.
-        SELF_ALIAS.forEach(a -> engine.put(a, sender));
+        /*SELF_ALIAS.forEach(a -> engine.put(a, sender));
 
         try {
             Object result = engine.eval(String.join(" ", args));
@@ -44,7 +47,7 @@ public class CommandJS extends StaffCommand {
                 sender.sendMessage(result.toString());
         } catch (Exception e) {
             sender.sendMessage(e.getMessage());
-        }
+        }*/
     }
 
     /**
