@@ -3,6 +3,7 @@ package net.kineticraft.lostcity.discord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.dv8tion.jda.core.entities.MessageChannel;
+import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.utils.ServerUtils;
 
 import java.util.Arrays;
@@ -44,6 +45,6 @@ public enum DiscordChannel {
      */
     public static DiscordChannel getChannel(MessageChannel channel) {
         return DiscordAPI.isAlive() ?
-                Arrays.stream(values()).filter(dc -> dc.getChannel().equals(channel)).findAny().orElse(null) : null;
+                Arrays.stream(values()).filter(dc -> dc.getChannelId() == channel.getIdLong()).findAny().orElse(null) : null;
     }
 }

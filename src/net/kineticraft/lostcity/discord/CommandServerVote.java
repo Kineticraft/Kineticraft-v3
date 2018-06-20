@@ -83,7 +83,12 @@ public class CommandServerVote extends DiscordCommand {
         if (!DiscordAPI.isAlive())
             return;
 
-        List<Message> messages = DiscordChannel.ORYX.getChannel().getHistory().retrievePast(75).complete();
+        List<Message> messages;
+        try {
+            messages = DiscordChannel.ORYX.getChannel().getHistory().retrievePast(75).complete();
+        }catch(NullPointerException ex) {
+            return; // Nothing to update
+        }
         Collections.reverse(messages); // Oldest to newest.
 
         String bill = null;

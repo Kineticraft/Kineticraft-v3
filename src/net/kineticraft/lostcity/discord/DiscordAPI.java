@@ -8,7 +8,6 @@ import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.events.CommandRegisterEvent;
 import net.kineticraft.lostcity.mechanics.system.Mechanic;
-import net.kineticraft.lostcity.utils.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

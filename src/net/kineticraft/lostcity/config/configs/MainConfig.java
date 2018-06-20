@@ -18,10 +18,10 @@ public class MainConfig extends JsonConfig {
     private String voteURL = "http://google.com/";
     private int afkLimit = 30;
     private JsonMap<String> filter = new JsonMap<>();
-    private String discordToken;
-    private long serverId;
+    private String discordToken = "";
+    private long serverId = 0;
     private BuildType buildType = BuildType.PRODUCTION;
-    private int build;
+    private int build = 67;
     private int lastNotesSize;
     private Party party;
     private StringList swearWords = new StringList();

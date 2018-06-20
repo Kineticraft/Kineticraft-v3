@@ -58,9 +58,9 @@ public class CommandCondense extends PlayerCommand {
                 condensed.setAmount(condensedAmt > 64 ? 64 : condensedAmt);
                 condensedAmt -= condensed.getAmount();
                 StackAndCondenseUtils.giveStack(player, cidx++, condensed.clone());
-                if(condensedAmt == 0)
-                    StackAndCondenseUtils.giveStack(player, cidx, extra);
             }
+            if(extraAmt > 0)
+                StackAndCondenseUtils.giveStack(player, cidx, extra.clone());
         });
         player.updateInventory();
     }

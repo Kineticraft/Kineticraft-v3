@@ -313,7 +313,7 @@ public abstract class Command {
      * @param arg
      */
     protected void autocompleteOnline(int arg) {
-        autocomplete(arg, p -> Bukkit.getOnlinePlayers().stream().filter(pl -> !KCPlayer.getWrapper(pl).isVanished()).map(Player::getName).collect(Collectors.toList()));
+        autocomplete(arg, p -> Bukkit.getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
     }
 
     /**
