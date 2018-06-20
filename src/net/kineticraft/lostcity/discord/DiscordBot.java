@@ -219,11 +219,13 @@ public class DiscordBot extends ListenerAdapter {
                             + Utils.getSenderName(sender) + ChatColor.GRAY + ": " + ChatColor.WHITE + message;
                     Bukkit.getScheduler().runTask(Core.getInstance(), () -> {
                         Bukkit.getOnlinePlayers().stream().forEach(player -> {
-                            if(!KCPlayer.getWrapper(player).getIgnored().containsIgnoreCase(p.getUsername()))
-                                player.sendMessage(KCPlayer.getWrapper(player).getState(Toggles.Toggle.CENSOR)
+                            if(!KCPlayer.getWrapper(player).getIgnored().containsIgnoreCase(p.getUsername())) {
+                                player.sendMessage(
+                                      KCPlayer.getWrapper(player).getState(Toggles.Toggle.CENSOR)
                                     ? msg.substring(0, msg.indexOf(':') + 1) + Chat.censor(msg.substring(msg.indexOf(':') + 1))
                                     : msg
                                 );
+                            }
                         });
                     });
                 }
