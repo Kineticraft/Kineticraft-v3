@@ -1,23 +1,30 @@
 package net.kineticraft.lostcity.mechanics;
 
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.crake.detectors.movement.Flight;
 import net.kineticraft.lostcity.mechanics.metadata.MetadataManager;
 import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import net.kineticraft.lostcity.utils.Utils;
+import net.minecraft.server.v1_12_R1.EntityArrow;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleMoveEvent;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
@@ -75,6 +82,35 @@ public class Restrictions extends Mechanic {
     @EventHandler(ignoreCancelled = true) // Prevent players from teleporting using gm3.
     public void onTeleport(PlayerTeleportEvent evt) {
         evt.setCancelled(evt.getCause() == PlayerTeleportEvent.TeleportCause.SPECTATE && !Utils.isStaff(evt.getPlayer()));
+    }
+
+    @EventHandler(ignoreCancelled = true) // Prevent fire arrows from setting off TNT in claims
+    public void onEntityChangeBlock(EntityChangeBlockEvent evt) {
+        if(EntityType.ARROW.equals(evt.getEntityType()) && Material.TNT.equals(evt.getBlock().getType())) {
+            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(evt.getBlock().getLocation(), true, null);
+            if(claim != null) {
+                ArrayList<String> perms = new ArrayList<>();
+                perms.add(claim.ownerID.toString());
+                claim.getPermissions(perms, new ArrayList<>(), new ArrayList<>(), perms);
+                Arrow arrow = (Arrow)evt.getEntity();
+                if(arrow.getShooter() instanceof Player && !perms.contains(((Player)arrow.getShooter()).getUniqueId().toString()))
+                    evt.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true) // Prevent players from igniting TNT inside claims via right-clicking
+    public void onPlayerInteract(PlayerInteractEvent evt) {
+        if(Material.TNT.equals(evt.getClickedBlock().getType()) && Action.RIGHT_CLICK_BLOCK.equals(evt.getAction())) {
+            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(evt.getClickedBlock().getLocation(), true, null);
+            if(claim != null) {
+                ArrayList<String> perms = new ArrayList<>();
+                perms.add(claim.ownerID.toString());
+                claim.getPermissions(perms, new ArrayList<>(), new ArrayList<>(), perms);
+                if(!perms.contains(evt.getPlayer().getUniqueId().toString()))
+                    evt.setCancelled(true);
+            }
+        }
     }
 
     @Override

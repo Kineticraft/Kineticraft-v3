@@ -17,7 +17,7 @@ import java.util.List;
 public class CommandReport extends PlayerCommand {
 
     public CommandReport() {
-        super("<player|location|glitch|other>", "Submit a report.","report");
+        super("", "Submit a report.","report");
     }
 
     private static List<String> types = Arrays.asList("Player", "Location", "Glitch", "Staff", "Other");
@@ -88,7 +88,8 @@ public class CommandReport extends PlayerCommand {
                 }, "Yes", "No");
                 break;
             case 2:
-                player.sendMessage(ChatColor.WHITE + "Please select what type of report you are submitting (" + String.join("|", types.toArray(new String[types.size()])) + "):");
+                if(meta == 0)
+                    player.sendMessage(ChatColor.WHITE + "Please select what type of report you are submitting:");
                 Callbacks.promptConfirm(player, () -> {
                     if(!"Player".equalsIgnoreCase(types.get(meta)))
                         reportStep(step + 1, 0, player, anon, types.get(meta).toLowerCase(), subject);
@@ -98,10 +99,10 @@ public class CommandReport extends PlayerCommand {
                     }
                 }, () -> {
                     if(meta == types.size() - 1)
-                        reportStep(step + 1, 0, player, anon, types.get(types.size() - 1).toLowerCase(), subject);
+                        player.sendMessage("You have cancelled submitting your report. Have a nice day.");
                     else
                         reportStep(step, meta + 1, player, anon, type, subject);
-                }, types.get(meta), meta == types.size() - 1 ? types.get(types.size() - 1) : "Next");
+                }, types.get(meta), meta == types.size() - 1 ? "Cancel" : "Next");
                 break;
             case 3:
                 player.sendMessage("Please start typing your report:");

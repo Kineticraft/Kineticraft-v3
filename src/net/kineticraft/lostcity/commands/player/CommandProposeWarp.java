@@ -136,7 +136,15 @@ public class CommandProposeWarp extends PlayerCommand {
                                     ChatColor.DARK_AQUA + "4) Please state the dates needed for the warp. \n"
                         +
                         prefix + "Describe your Event: ");
-                Callbacks.listenForChat(player, description -> submitWarp(player, type, description));
+                Callbacks.listenForChat(player, description -> {
+                    sender.sendMessage(ChatColor.AQUA + "When will your event take place?");
+                    Callbacks.listenForChat(player, startTime -> {
+                        sender.sendMessage(ChatColor.AQUA + "How long will your warp need to be active?");
+                        Callbacks.listenForChat(player, activeTime -> {
+                            submitWarp(player, type, description, "Start Time: `" + startTime + "`", "Warp Active For: `" + activeTime + "`");
+                        });
+                    });
+                });
 
             } else if (type.equals("shop")) {
                 sender.sendMessage(prefix + " Shop Requirements: \n" +
@@ -184,7 +192,7 @@ public class CommandProposeWarp extends PlayerCommand {
         }
     }
 
-    private static void submitWarp(Player reporter, String type, String description) {
+    private static void submitWarp(Player reporter, String type, String description, String... extraData) {
         Location loc = reporter.getLocation();
         String message = "" +
                 "New **" + type + "** Warp Permit submission from `" + reporter.getName() + "`\n" +
@@ -194,6 +202,8 @@ public class CommandProposeWarp extends PlayerCommand {
                 "```\n" +
                 description + "\n" +
                 "```";
+        for(String s : extraData)
+            message += "\n" + s;
         DiscordAPI.sendMessage(DiscordChannel.WARP_PROPOSALS, message);
         //Core.logInfo(message);
         reporter.sendMessage(prefix + Utils.randElement(exitMessages));
