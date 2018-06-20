@@ -75,7 +75,7 @@ public class Toggles extends Mechanic {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onChat(AsyncPlayerChatEvent evt) {
         List<Player> filter = evt.getRecipients().stream().filter(p -> getToggle(p, Toggle.CENSOR)).collect(Collectors.toList());
-        String censored = Chat.censor(String.format(evt.getFormat(), evt.getPlayer().getDisplayName(), evt.getMessage()));
+        String censored = String.format(evt.getFormat(), evt.getPlayer().getDisplayName(), Chat.censor(evt.getMessage()));
         evt.getRecipients().removeAll(filter);
         filter.forEach(p -> p.sendMessage(censored));
     }
@@ -116,7 +116,7 @@ public class Toggles extends Mechanic {
     public enum Toggle {
         PVP("pvp status"),
         CENSOR("chat filter"),
-        GOD(EnumRank.JR_MOD, "god mode");
+        GOD(EnumRank.JR_BUILDER, "god mode");
 
         private final EnumRank minRank;
         private String description;
