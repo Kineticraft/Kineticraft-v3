@@ -30,7 +30,6 @@ public class CommandJS extends StaffCommand {
 
     public CommandJS() {
         super(EnumRank.DEV, "<expression>", "Evaluate a JavaScript expression.", "js");
-        setDangerous(true);
         initJS();
     }
 

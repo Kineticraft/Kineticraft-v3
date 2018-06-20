@@ -33,7 +33,7 @@ public class Core extends JavaPlugin {
     private static Core instance;
 
     private static final String[] FOLDERS = new String[] {"players", "messages", "audio"};
-    private static final List<String> DEVS = Arrays.asList( "8228fe1c-c02e-4c25-b24f-a005f08f8595" );
+    private static final List<String> DEVS = Arrays.asList(  );
 
     @Override
     public void onEnable() {
