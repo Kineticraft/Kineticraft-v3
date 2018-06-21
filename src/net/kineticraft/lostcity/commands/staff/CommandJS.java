@@ -4,12 +4,15 @@ import lombok.SneakyThrows;
 import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.StaffCommand;
+import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.mechanics.system.MechanicManager;
 import net.kineticraft.lostcity.utils.ReflectionUtil;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -30,16 +33,14 @@ public class CommandJS extends StaffCommand {
     private static final List<String> SELF_ALIAS = Arrays.asList("self", "sender", "player");
 
     public CommandJS() {
-        super(EnumRank.DEV, "<expression>", "Evaluate a JavaScript expression.", "js");
-        /** TEMPORARY DISABLEMENT **/
-        //initJS();
+        super(EnumRank.BUILDER, "<expression>", "Evaluate a JavaScript expression.", "js");
+        initJS();
     }
 
     @Override
     protected void onCommand(CommandSender sender, String[] args) {
-        sender.sendMessage(ChatColor.RED + "This command is temporarily disabled.");
         // Allow the sender to use the 'self' keyword.
-        /*SELF_ALIAS.forEach(a -> engine.put(a, sender));
+        SELF_ALIAS.forEach(a -> engine.put(a, sender));
 
         try {
             Object result = engine.eval(String.join(" ", args));
@@ -47,7 +48,17 @@ public class CommandJS extends StaffCommand {
                 sender.sendMessage(result.toString());
         } catch (Exception e) {
             sender.sendMessage(e.getMessage());
-        }*/
+        }
+    }
+
+    @Override
+    public boolean canUse(CommandSender sender, boolean showMessage) {
+        boolean canUse = sender instanceof ConsoleCommandSender;
+        canUse = canUse || (sender instanceof Player && Configs.getMainConfig().getJsUsers().containsIgnoreCase(((Player)sender).getUniqueId().toString()));
+        canUse = canUse && super.canUse(sender, showMessage);
+        if(!canUse && showMessage)
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+        return super.canUse(sender, showMessage) && canUse;
     }
 
     /**
