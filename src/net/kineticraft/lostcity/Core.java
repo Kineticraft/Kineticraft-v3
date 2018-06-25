@@ -33,7 +33,6 @@ public class Core extends JavaPlugin {
     private static Core instance;
 
     private static final String[] FOLDERS = new String[] {"players", "messages", "audio"};
-    private static final List<String> DEVS = Arrays.asList( "8228fe1c-c02e-4c25-b24f-a005f08f8595" );
 
     @Override
     public void onEnable() {
@@ -131,18 +130,6 @@ public class Core extends JavaPlugin {
      */
     public static File getFile(String name) {
         return new File(Core.getInstance().getDataFolder() + "/" + name);
-    }
-
-    /**
-     * Strictly checks whether the command sender is a dev from a hardcoded list.
-     * Is used for highly sensitive functions such as javascript evaluating.
-     *
-     * @param sender
-     * @return isDev
-     */
-    public static boolean isDev(CommandSender sender) {
-        return (sender instanceof Player && DEVS.contains(((Player) sender).getUniqueId().toString()))
-                || sender instanceof ConsoleCommandSender;
     }
 
     /**

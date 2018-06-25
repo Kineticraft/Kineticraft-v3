@@ -5,3 +5,5 @@ out/
 libs/PaperSpigot*.jar
 Kineticraft.iml
 run/
+events/
+arch/

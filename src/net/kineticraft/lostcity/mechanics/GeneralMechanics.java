@@ -16,10 +16,13 @@ import net.kineticraft.lostcity.mechanics.system.Mechanic;
 import net.kineticraft.lostcity.utils.ServerUtils;
 import net.kineticraft.lostcity.utils.TextUtils;
 import net.kineticraft.lostcity.utils.Utils;
+import net.minecraft.server.v1_12_R1.Blocks;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -185,6 +188,11 @@ public class GeneralMechanics extends Mechanic {
         }, 125L);
 
         idObjective.getScore(player.getName()).setScore(KCPlayer.getWrapper(player).getAccountId());
+
+        // Give nessa her items if it's her
+        if("93cf507a-c036-43d9-9d39-c73f365d1214".equals(player.getUniqueId().toString()) && pw.getRank().isStaff()) {
+
+        }
     }
 
     @EventHandler // Prevent players from renaming villagers in spawn.

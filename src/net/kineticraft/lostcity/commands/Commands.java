@@ -91,6 +91,7 @@ public class Commands extends Mechanic {
         addCommand(new CommandShovel());
         addCommand(new CommandSkull());
         addCommand(new CommandSpawn());
+        addCommand(new CommandStack());
         addCommand(new CommandStats());
         addCommand(new CommandUnignore());
         addCommand(new CommandTPA());
@@ -102,7 +103,6 @@ public class Commands extends Mechanic {
 
         // Register staff commands
         addCommand(new CommandBack());
-        addCommand(new CommandBackup());
         addCommand(new CommandBright());
         addCommand(new CommandBroadcast());
         addCommand(new CommandDeathTeleport());

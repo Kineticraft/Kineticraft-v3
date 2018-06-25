@@ -1,5 +1,6 @@
 package net.kineticraft.lostcity.commands.player;
 
+import net.kineticraft.lostcity.EnumRank;
 import net.kineticraft.lostcity.commands.PlayerCommand;
 import net.kineticraft.lostcity.data.KCPlayer;
 import org.bukkit.ChatColor;
@@ -20,6 +21,12 @@ public class CommandIgnore extends PlayerCommand {
     protected void onCommand(CommandSender sender, String[] args) {
         KCPlayer player = KCPlayer.getWrapper(sender);
 
+        KCPlayer ignored = KCPlayer.getWrapper(args[0]);
+        if(ignored == null) {
+            sender.sendMessage(ChatColor.RED + "Player not found.");
+            return;
+        }
+
         if (player.getIgnored().containsIgnoreCase(args[0])) {
             sender.sendMessage(ChatColor.GRAY + "You are already ignoring this player.");
             return;
@@ -27,6 +34,11 @@ public class CommandIgnore extends PlayerCommand {
 
         if (sender.getName().equalsIgnoreCase(args[0])) {
             sender.sendMessage(ChatColor.RED + "You cannot ignore yourself.");
+            return;
+        }
+
+        if(ignored.getRank().isStaff()) {
+            sender.sendMessage(ChatColor.RED + "You cannot ignore a staff member.");
             return;
         }
 

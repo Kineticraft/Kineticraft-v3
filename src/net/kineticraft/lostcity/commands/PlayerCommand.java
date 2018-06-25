@@ -16,7 +16,6 @@ import org.bukkit.command.CommandSender;
 public abstract class PlayerCommand extends Command {
 
     private EnumRank minRank;
-    @Setter private boolean dangerous;
 
     public PlayerCommand(String usage, String help, String... alias) {
         this(EnumRank.MU, usage, help, alias);
@@ -49,10 +48,6 @@ public abstract class PlayerCommand extends Command {
         if (!passRank && showMessage)
             sender.sendMessage(ChatColor.RED + "You must be at least rank " + getMinRank().getName() + " to use this command.");
 
-        boolean passDanger = !isDangerous() || Core.isDev(sender);
-        if (!passDanger && showMessage)
-            sender.sendMessage(ChatColor.RED + "This command is restricted!");
-
-        return passRank && passDanger;
+        return passRank;
     }
 }

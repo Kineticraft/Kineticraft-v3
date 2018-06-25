@@ -25,7 +25,7 @@ public class CommandTPAHereTrigger extends TriggerCommand {
         if (!Utils.isVisible(player, other))
             return;
 
-        if(!CurrentEvent.canPlayerTPOut(other.getPlayer())) {
+        if(CurrentEvent.isEventActive() && !CurrentEvent.canPlayerTPOut(other.getPlayer())) {
             player.sendMessage(ChatColor.RED + "This player is currently in an event. They cannot teleport out.");
             return;
         }

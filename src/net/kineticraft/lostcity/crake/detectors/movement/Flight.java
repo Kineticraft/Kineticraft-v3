@@ -44,7 +44,7 @@ public class Flight extends Detector {
             ascentMax += (double) p.getPotionEffect(PotionEffectType.JUMP).getAmplifier() / 10;
 
         detections.detect(new Detection(p),
-                yDif == 0 && !checkNearby(evt.getFrom(), Material.WATER_LILY, Material.CARPET), // Hover.
+                yDif == 0 && !checkNearby(evt.getFrom(), Material.WATER_LILY, Material.CARPET, Material.SNOW, Material.SNOW_BLOCK, Material.SLIME_BLOCK), // Hover.
                 yDif > ascentMax, // If they sharply ascend.
                 yDif == -.125D); // Glide (Unsure if this works.)
     }
@@ -70,7 +70,7 @@ public class Flight extends Detector {
      */
     private static boolean isSolid(Block bk) {
         Material type = bk.getType();
-        return type.isSolid() || type == Material.CHORUS_PLANT || type == Material.CHORUS_FLOWER;
+        return type.isSolid() || type == Material.CHORUS_PLANT || type == Material.CHORUS_FLOWER || type == Material.SNOW || type == Material.SNOW_BLOCK;
     }
 
     /**
@@ -98,6 +98,6 @@ public class Flight extends Detector {
                 || player.getVelocity().getY() > 0 // Not being launched up
                 || player.getNearbyEntities(1, 2, 1).stream().anyMatch(e -> e.getType() == EntityType.BOAT) // Not standing on a boat.
                 || player.getLocation().getBlock().isLiquid() // Not in water.
-                || CurrentEvent.canFly(player);
+                || (CurrentEvent.isEventActive() && CurrentEvent.canFly(player));
     }
 }

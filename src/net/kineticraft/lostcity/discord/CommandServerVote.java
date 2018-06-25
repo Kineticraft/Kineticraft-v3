@@ -83,7 +83,12 @@ public class CommandServerVote extends DiscordCommand {
         if (!DiscordAPI.isAlive())
             return;
 
-        List<Message> messages = DiscordChannel.ORYX.getChannel().getHistory().retrievePast(75).complete();
+        List<Message> messages;
+        try {
+            messages = DiscordChannel.ORYX.getChannel().getHistory().retrievePast(75).complete();
+        }catch(NullPointerException ex) {
+            return; // Nothing to update
+        }
         Collections.reverse(messages); // Oldest to newest.
 
         String bill = null;
@@ -91,7 +96,7 @@ public class CommandServerVote extends DiscordCommand {
             Message temp = messages.remove(0);
 
             try {
-                if (temp.getContent().contains(" votes needed by tomorrow")) {
+                if (temp.getContentDisplay().contains(" votes needed by tomorrow")) {
                     Date expiry = Date.from(Instant.ofEpochMilli(temp.getCreationTime().toInstant().toEpochMilli()
                             + (60L * 60 * 1000 * MAX_VOTE_HOURS)));
 
@@ -108,7 +113,7 @@ public class CommandServerVote extends DiscordCommand {
                 e.printStackTrace();
             }
 
-            bill = temp.getContent();
+            bill = temp.getContentRaw();
             if (bill.contains("``"))
                 bill = bill.split("``")[1];
         }
@@ -124,7 +129,7 @@ public class CommandServerVote extends DiscordCommand {
             return 0;
 
         MessageReaction mr = message.getReactions().stream()
-                .filter(r -> r.getEmote().getName().equalsIgnoreCase(reaction.getIcon())).findAny().orElse(null);
+                .filter(r -> r.getReactionEmote().getName().equalsIgnoreCase(reaction.getIcon())).findAny().orElse(null);
 
         int count = mr != null ? mr.getCount() : 0;
         if (mr == null || mr.getCount() == 0) {

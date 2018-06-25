@@ -8,7 +8,6 @@ import net.kineticraft.lostcity.Core;
 import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.events.CommandRegisterEvent;
 import net.kineticraft.lostcity.mechanics.system.Mechanic;
-import net.kineticraft.lostcity.utils.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -56,7 +55,7 @@ public class DiscordAPI extends Mechanic {
      * @param message
      */
     public static void sendGame(String message) {
-        sendMessage(DiscordChannel.INGAME, message.replace("_", "\\_"));
+        sendMessage(DiscordChannel.INGAME, message.replaceAll("_", "\\_").replaceAll("@", "\\@ "));
     }
 
     /**
@@ -93,7 +92,7 @@ public class DiscordAPI extends Mechanic {
      * @return alive
      */
     public static boolean isAlive() {
-        return getBot() != null && !ServerUtils.isDevServer() && Configs.getMainConfig().getServerId() != 0;
+        return getBot() != null && Configs.getMainConfig().getServerId() != 0;
     }
 
     /**
@@ -178,10 +177,16 @@ public class DiscordAPI extends Mechanic {
         if (!canEdit(user))
             return;
 
-        Set<Role> roleSet = getMember(user).getRoleSet();
+        List<Role> currentRoles = new ArrayList<>(getMember(user).getRoleSet());
+        List<Role> rolesToRemove = currentRoles.stream().filter(r -> Arrays.asList(roles).contains(r)).collect(Collectors.toList()),
+                   rolesToAdd = Arrays.asList(roles).stream().map(DiscordAPI::getRole).filter(r -> r != null && !currentRoles.contains(r)).collect(Collectors.toList());
+
+        getManager().modifyMemberRoles(getMember(user), rolesToAdd, rolesToRemove).queue();
+
+        /*getManager().removeRolesFromMember(getMember(user), getMember(user).getRoles());
         roleSet.clear();
         roleSet.addAll(Arrays.stream(roles).map(DiscordAPI::getRole).filter(Objects::nonNull).collect(Collectors.toList()));
-        getManager().addRolesToMember(getMember(user)).queue(); // Send the changes.
+        getManager().addRolesToMember(getMember(user), roleSet.toArray(new Role[roleSet.size()])).queue(); // Send the changes.*/
     }
 
     /**

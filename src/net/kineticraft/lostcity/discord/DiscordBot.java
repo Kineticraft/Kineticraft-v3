@@ -19,6 +19,8 @@ import net.kineticraft.lostcity.commands.CommandType;
 import net.kineticraft.lostcity.commands.Commands;
 import net.kineticraft.lostcity.config.Configs;
 import net.kineticraft.lostcity.data.KCPlayer;
+import net.kineticraft.lostcity.mechanics.Chat;
+import net.kineticraft.lostcity.mechanics.Toggles;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,7 +54,7 @@ public class DiscordBot extends ListenerAdapter {
 
         try {
             bot = new JDABuilder(AccountType.BOT).setToken(Configs.getMainConfig().getDiscordToken())
-                    .addEventListener(this).setAutoReconnect(true).setGame(Game.of("Kineticraft"))
+                    .addEventListener(this).setAutoReconnect(true).setGame(Game.of(Game.GameType.DEFAULT, "Kineticraft"))
                     .setStatus(OnlineStatus.ONLINE).buildAsync(); // Setup listener and connect to discord.
             active = true;
         } catch (Exception e) {
@@ -181,7 +183,7 @@ public class DiscordBot extends ListenerAdapter {
 
         DiscordChannel channel = DiscordChannel.getChannel(getLastChannel());
         DiscordSender sender = new DiscordSender(event.getAuthor(), event.getMessage());
-        String noColor = ChatColor.stripColor(event.getMessage().getContent());
+        String noColor = ChatColor.stripColor(event.getMessage().getContentDisplay());
         final String message = noColor.substring(0, Math.min(128, noColor.length())); // Limit size of message.
 
         if (DiscordAPI.isVerified(event.getAuthor())) {
@@ -212,10 +214,21 @@ public class DiscordBot extends ListenerAdapter {
             }
 
             if (!Commands.handleCommand(sender, CommandType.SLASH, message) && !CommandType.DISCORD.matches(message)) {
-                if (message.length() > 0)
-                    Bukkit.getScheduler().runTask(Core.getInstance(), () -> Bukkit.broadcastMessage(
-                            ChatColor.GRAY.toString() + ChatColor.BOLD + "DISCORD" + ChatColor.GRAY + " "
-                                    + Utils.getSenderName(sender) + ChatColor.GRAY + ": " + ChatColor.WHITE + message));
+                if (message.length() > 0) {
+                    String msg = ChatColor.GRAY.toString() + ChatColor.BOLD + "DISCORD" + ChatColor.GRAY + " "
+                            + Utils.getSenderName(sender) + ChatColor.GRAY + ": " + ChatColor.WHITE + message;
+                    Bukkit.getScheduler().runTask(Core.getInstance(), () -> {
+                        Bukkit.getOnlinePlayers().stream().forEach(player -> {
+                            if(!KCPlayer.getWrapper(player).getIgnored().containsIgnoreCase(p.getUsername())) {
+                                player.sendMessage(
+                                      KCPlayer.getWrapper(player).getState(Toggles.Toggle.CENSOR)
+                                    ? msg.substring(0, msg.indexOf(':') + 1) + Chat.censor(msg.substring(msg.indexOf(':') + 1))
+                                    : msg
+                                );
+                            }
+                        });
+                    });
+                }
                 return;
             }
         }

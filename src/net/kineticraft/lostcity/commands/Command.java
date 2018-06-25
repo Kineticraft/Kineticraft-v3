@@ -3,6 +3,7 @@ package net.kineticraft.lostcity.commands;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
+import net.kineticraft.lostcity.data.KCPlayer;
 import net.kineticraft.lostcity.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -29,7 +29,7 @@ public class ServerUtils {
     /**
      * Take a backup of the server.
      */
-    public static void takeBackup() {
+    /*public static void takeBackup() {
         assert !isBackingUp();
 
         if (!Bukkit.isPrimaryThread()) {
@@ -47,7 +47,7 @@ public class ServerUtils {
             Dog.KINETICA.say("Backup complete.");
             backingUp = false;
         });
-    }
+    }*/
 
     /**
      * Cancel the current reboot, if any.
