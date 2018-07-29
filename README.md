@@ -20,33 +20,36 @@ Please also note that instructions may differ between various operating system. 
 
 ## Setup Instructions for IntelliJ IDEA:
 
-1. Download IntelliJ IDEA (Community or Professional version) from link above and install to system.
+1. Download IntelliJ IDEA (Community or Professional version) from link above and install it to local system.
 2. Download the repository `Kineticraft-master` by clicking on `Clone or Download` green button, then click on `Download ZIP`.
-3. Unzip `Kineticraft-master` file (external programs -such as WinRar- may be needed)
-4. Open IntelliJ IDEA, `File` > `Open` > Select `Kineticraft-master` folder > `Open`.
-5. Configure Project Structure (`File` > `Project Structure`):
+3. Unzip `Kineticraft-master` file (external programs -such as WinRar- may be needed) and place in desired location on local system.
+(Keep in mind the location of this directory, as you will need it in Step 5)
+4. Download `PaperSpigot-latest.jar` from link above and place in `libs` folder, inside of `Kineticraft-master` folder.
+5. Open IntelliJ IDEA, `File` > `Open` > Select `Kineticraft-master` folder > `Open`.
+6. Configure Project Structure (`File` > `Project Structure`):
     1. Under `Project Settings` > `Project`:
         1. Set `Project SDK` to `1.8`.
         2. Set `Project language level` to `8 - Lambdas, type annotations etc`.
     2. Under `Project Settings` > `Modules` > `Kineticraft-master` > `Sources`:
-        1. Mark the `src` directory as a `Source`.
-    3. Under `Project Settings` > `Modules` > `source-master` > `Paths`:
+        1. Mark the `src` directory as a `Source` by clicking on `src` folder then click on `Sources` button, next to `Mark As`.
+    3. Under `Project Settings` > `Modules` > `Kineticraft-master` > `Paths`:
         1. Press the `Use module compile output path` radio button.
-        2. Set `Output path` to a `/production/Kineticraft-master/build`.
-        3. Set `Test output path` to `/test/Kineticraft-master/test`.
+        2. Set `Output path` to `<path_to_directory>/build`.
+        3. Set `Test output path` to `<path_to_directory>/test`.
     4. Under `Project Settings` > `Libraries`:
         1. Press the `+` button in the top of the left panel and select `Java`.
-        2. From the file browser, select 10 jar files within the `/libs/` directory then click `open`.
+        2. From the file browser, select 10 jar files within the `libs` folder then click `open`.
         3. A window named `Choose Modules` will pop up, select the `Kineticraft-master` module and press `OK`.
-        4. On the top of the window, ensure the name is `libs`.
+        4. On the top of the window, rename to `libs`.
     5. Under `Project Settings` > `Artifacts`:
         1. Press the `+` button, hover over `JAR` and select `Empty`.
         2. Name the new entry `Kineticraft`.
         3. Toggle the `Include in project build` checkmark.
-        4. In the `Available Elements` panel, double click `'libs' to move it over to the left panel.
+        4. In the `Available Elements` panel, double click `'Kineticraft' compile output` to move it over to the left panel.
         5. On the left panel, click `Kineticraft.jar`, just below, press the `Use Exisiting Manifest` button.
         6. Select `MANIFEST.MF` within the `META-INF` folder.
-4. Final Touches
+    6. Click `Okay` after Step 1 - 5 is completed.
+7. Final Touches
     1. Enable annotation processing:
         1. `IntelliJ IDEA` > `Preferences` > `Build, Execution, Deployment` > `Compiler` > `Annotation Processors`.
         2. Check the `Enable annotation processing` box.
